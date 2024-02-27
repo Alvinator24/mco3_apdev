@@ -1,0 +1,180 @@
+:root {
+    --yellow: #FFB804;
+    --brown: #BB8A52;
+    --green: #0C3A2D;
+}
+
+form{
+    height: 100%-50px;
+    margin: 50px 80px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+form > div{
+    background-color: white;
+    border: none;
+    border-radius: 25px;
+    height: 100%;
+    width: 100%;
+}
+
+.basic-info, .user-bio{ 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-around;
+    padding-bottom: 10px;
+}
+
+.basic-info{
+    width: 60%;
+}
+
+h2 {
+    font-size: 45px;
+    color: var(--green);
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.info{
+    display: flex;
+    flex-direction: row;
+    width: 80%;
+    align-items: center;
+    justify-content: center;
+}
+
+.label{
+    color: var(--brown);
+    width: 250px;
+    font-size: 20px;
+}
+
+.text{
+    padding: 5px 10px;
+    font-size: 20px;
+    flex: 1;
+    height: 40px;
+    outline: none;
+    border: 1px solid var(--yellow);
+    border-radius: 15px;
+}
+
+.pass-todo{
+    padding-top: 20px;
+    width: 80%;
+
+}
+
+.ub-info{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.user-bio{
+    flex:1;
+    width: 100%;
+}
+
+span{
+    font-size: 12px;
+    color: var(--brown);
+    font-weight: 500;
+    font-style: italic;
+}
+
+.bio{
+    width: 80%;
+}
+
+.bio-label{
+    color: var(--brown);
+    width: 100%;
+    font-size: 20px;
+
+}
+
+.text-bio{
+    padding: 5px 10px;
+    font-size: 20px;
+    flex: 1;
+    height: 250px;
+    width: 95%;
+    outline: none;
+    border: 1px solid var(--yellow);
+    border-radius: 15px;
+    align-self: self-start;
+}
+
+.agree{
+    display: inline;
+    justify-content: center;
+    text-align: center;
+}
+
+.register-form{
+    display: flex;
+    flex-direction: row;
+    width:100%;
+}
+
+.shadow {
+    box-shadow: 0px 10px 10px 0px rgb(59, 59, 59);
+}
+
+#register{
+    width: 80%;
+}
+
+@media screen and (max-width: 1240px) {
+    
+    html{
+        background-size: cover;
+        background-repeat: no-repeat;
+    }
+
+    body{
+        height: fit-content;
+    }
+
+    .register-form{
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+        height: fit-content;
+        padding-bottom: 25px;
+        background-color: white;
+        border: none;
+        border-radius: 25px;
+        box-shadow: 0px 10px 10px 0px rgb(59, 59, 59);
+
+    }
+
+    .basic-info, .user-bio, .ub-info{
+        background-color: none;
+        border: none;
+        box-shadow: none;
+        width: 100%;
+    }
+
+    .pass-todo{
+        font-size: 11px;
+    }
+    .ub-info{
+        padding-bottom: 20px;
+    }
+
+    .user-bio{
+        margin-top: -30px;
+    }
+
+    .agree{
+        padding-bottom: 20px;
+    }
+}

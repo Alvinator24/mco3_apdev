@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Login Page</title>
+    <link rel="stylesheet" href="/css/login_styles.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+</head>
+
+<body>
+    <div class="picture container">
+        <img id="img1" class="image" src="/assets/loginpic1.jpg"/>
+        <img id="img2" class="image" src="/assets/loginpic2.jpg"/>
+        <img id="img3" class="image" src="/assets/loginpic3.jpg"/>
+        <img id="img4" class="image" src="/assets/loginpic4.jpg"/>
+        <section class="pic-nav">
+            <div  class="circle" onclick="clickCircle(1)"></div>
+            <div  class="circle" onclick="clickCircle(2)"></div>
+            <div  class="circle" onclick="clickCircle(3)"></div>
+            <div  class="circle" onclick="clickCircle(4)"></div>
+        </section>
+    </div>
+    
+    <div class="login container shadow">
+        <div class="login-contents">
+            <form class="login-form" action="/users/login" method="POST">
+                <h1>login</h1>
+                <div class="input-sec">
+                    <div class="detail">
+                        <img src="/assets/user.png" class="icon"/>
+                        <input type="text" class="info" name="username" placeholder="username...">
+                    </div>
+                    <div class="detail">
+                        <img class="icon" src="/assets/pass.png"/>
+                        <input type="password" class="info" name="password" placeholder="password...">
+                    </div>
+                </div>
+
+                <div class="recall-pass">
+                    <div> 
+                        <input type="checkbox" name="remember">
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a>Forgot password?</a>
+                </div>
+
+                <input type="submit" value="login" id="login">
+            </form>
+        </div>
+    </div>
+    <!-- <script src="../js/mco_login_js.js"></script> -->
+    <script>
+        var slideIndex = 0;
+        carousel()
+        function carousel() {
+            var i;
+            var x = document.getElementsByClassName("image");
+            var circles = document.getElementsByClassName("circle");
+            for (i = 0; i < x.length; i++) {
+                x[i].style.display = "none";
+            }
+            slideIndex++;
+            if (slideIndex > x.length) {slideIndex = 1}
+            x[slideIndex-1].style.display = "block";
+            circles[slideIndex-1].classList.add("active");
+            setTimeout(carousel, 2000); // Change image every 2 seconds
+            for(i = 0; i < x.length; i++){
+                if(i!=(slideIndex-1)){
+                    circles[i].classList.remove("active");
+                }
+            }
+        }
+    </script>
+</body>
+</html>
