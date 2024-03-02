@@ -1,7 +1,10 @@
 const express = require('express')
 const router = express.Router()
+const bcrypt = require('bcrypt')
+const { body, validationResult } = require('express-validator');
+// const session = require('express-session')
 
-const user = require('../models/users')
+const User = require('../models/users')
 
 // new user route (displaying the form)
 router.get('/register', (req, res) => {
@@ -10,12 +13,13 @@ router.get('/register', (req, res) => {
     })
 })
 
+
 // register new user route
 router.post('/register', (req, res) => {
 
     const { lastname, firstname, email, mobilenumber, username, password, confirmpassword, bio, agree } = req.body;
 
-    const newUser = new user({
+    const newUser = new User({
         lastname: lastname,
         firstname: firstname,
         email: email,
@@ -33,10 +37,23 @@ router.post('/register', (req, res) => {
     //         errorMessage: 'Passwords do not match'
     //     });
     // }
+
+    // form validation
+    const validateForm = [
+        body('username').isLength({ min: 5 }).withMessage('Username must be at least 3 characters'),
+        body('email').isEmail().withMessage('Invalid email address'),
+        body('password').isLength({ min: 8 }).withMessage('Password must be at least 6 characters'),
+      ];
       
     // Check if password and confirmPassword match
     if (password !== confirmpassword) {
         return res.status(400).json({ error: 'Password and confirmpassword do not match.' });
+    }
+
+    const errors = validationResult(req);
+
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
     }
 
     newUser.save()
@@ -51,70 +68,56 @@ router.post('/register', (req, res) => {
     })
 })
 
-// login (displaying the form)
+
+// get the login page
 router.get('/login', (req, res) => {
     res.render('users/login', {
-        // layout: 'login',
         title: 'Login Page'
     })
 })
 
-// successfully logged in
+
+// login authentication
 router.post('/login', async (req, res) => {
-    const { username, password } = req.body;
-    
+    const { username, password } = req.body
+
     try {
-        // Replace the checkUserCredentials function with your actual authentication logic
-        // using hashing with bcrypt
-        const existingUser = await user.findOne({ username: username });
-    
-        if (!existingUser) {
-            return res.render('users/login', {
-                errorMessage: 'User not found'
-            });
-        }
-    
-        const isPasswordValid = await bcrypt.compare(password, existingUser.password);
-    
-        if (isPasswordValid) {
-            res.send('Successfully logged in');
-             // or redirect to a success page: res.render('success', { message: 'Successfully logged in' });
-        } else {
-            res.render('users/login', {
-                errorMessage: 'Invalid password'
-            });
-                // or redirect to an error page: res.render('error', { message: 'Invalid credentials' });
-        }
+      const findUser = await User.findOne({ username })
+  
+      if (!findUser) {
+        console.log('Invalid username')
+        return res.redirect('./login')
+      }
+  
+      const match = await bcrypt.compare(password, findUser.password)
+  
+      if (!match) {
+        console.log('Invalid password')
+        return res.redirect('./login')
+      } else {
+        return res.redirect('./homepage')
+      }
+
     } catch (error) {
-        console.error(error);
-        res.status(500).send('Internal Server Error');
+      console.error(error)
+      res.status(500).json({ message: 'Internal server error' });
     }
+});
+
+
+// settings page
+router.get('/settings', (req, res) => {
+    res.render('users/settings', {
+        title: 'Settings Page'
+    })
 })
 
-    // const user = users.find(user => user.username === username)
-    // if (user == null) {
-    //     return res.status(400).send('Cannot find user')
-    // }
-    // try {
-    //     if ( await bcrypt.compare(password, user.password)) {
-    //         res.send('Succesfully logged in')
-    //     } else {
-    //         res.send('Cannot log in')
-    //     }
-    // } catch {
-    //     res.status(500).send()
-    // }
-
-
-    // Replace the checkUserCredentials function with your actual authentication logic
-    // using hashing with bcrypt
-    // const isAuthenticated = checkUserCredentials(username, password);
-
-    // if (isAuthenticated) {
-    //     res.render('success', { message: 'Successfully logged in' });
-    // } else {
-    //     res.render('error', { message: 'Invalid credentials' });
-    // }
-
+// homepage after login
+router.get('/homepage', (req, res) => {
+    res.render('users/homepage', {
+        title: 'Home Page',
+        posts: posts
+    })
+})
 
 module.exports = router

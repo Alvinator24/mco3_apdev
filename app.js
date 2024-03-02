@@ -6,6 +6,7 @@ const bodyParser = require('body-parser')
 
 const indexRouter = require('./controllers/index')
 const userRouter = require('./controllers/users')
+const postRouter = require('./controllers/posts')
 
 app.use(express.static('public'))
 
@@ -25,6 +26,7 @@ db.once('open', () => console.log('Connected to MongoDB'))
 
 app.use('/', indexRouter)
 app.use('/users', userRouter)
+app.use('/posts', postRouter)
 
 app.listen(3000, () => {
     console.log('Listening to port 3000')

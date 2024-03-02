@@ -1,1 +1,62 @@
-<p>Landing Page</p>
+<!DOCTYPE html>
+<html class="landingbg mp0">
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/notebook_styles.css">
+    <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Covered By Your Grace' rel='stylesheet'>
+    <link href="https://db.onlinewebfonts.com/c/784b803cfc3073fe60495bffc40cd2e1?family=Wildemount" rel="stylesheet">
+    <link href='https://fonts.googleapis.com/css?family=Dancing Script' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Kalam' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Architects Daughter' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Berkshire Swash' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Abhaya Libre' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Didact Gothic' rel='stylesheet'>
+    <link href="https://fonts.googleapis.com/css2?family=Baskervville:ital@0;1&display=swap" rel="stylesheet">
+</head>
+<body class="flexcolumn mp0 width100 ">
+    <div id="landingheader" class="mp0 width100 flexcolumn autocenter width100 comfortaafont">
+        <div id="firstrow" class="whitebg mp0 flexrow autocenter comfortaafont">
+            <div id="homelink">
+                <button class="headerbuttons" id="hb3">H O M E</button>
+            </div>
+            <div id="logodiv" class="mp0">
+                <img id="logopng" src="../../assets/logo4.png">
+            </div>
+            <div id="lrbuttons" >
+                <button class="headerbuttons" id="hb1">LOG IN</button>
+                <button class="headerbuttons greenbg whitefont" id="hb2">SIGN UP</button>
+            </div>
+        </div>
+        <div id="secondrow" class="flexrow autocenter mp0 width100 lemonbg whitefont">
+            <p id="caption">a music forum website</p>
+        </div>
+    </div>
+    <div id="landingbody" class="flexcolumn landingbodypositions ">
+        <h1 class="padded" >Notebook<br> Uniting Communities,<br> One Note at a time</h1>
+    </div>
+    <div id="graphics">
+        <img id="g1" src="../../assets/graphics1.png">
+        <img id="g1" src="../../assets/graphics2.png">
+        <img id="g1" src="../../assets/graphics3.png">
+        <img id="g1" src="../../assets/graphics4.png">
+    </div>
+    <div id="footer" class="textalignright whitebg">
+        <p>Copyright &copy; 2024 Notebook. All Rights Reserved.</p>
+        <p>Created as a partial requirement for CCAPDEV.</p>
+        <p>Alvin Cua | Geo Hilomen | Renee Khan | Kean Rosales</p>
+    </div>
+    <!-- <script src="../js/mco_login_js.js"></script> -->
+    <script>
+        document.getElementById("hb1").onclick = () => {
+            window.location.href = "auth/login";
+        }
+        document.getElementById("hb2").onclick = () => {
+            window.location.href = "register/create";
+        }
+        document.getElementById("hb3").onclick = () => {
+            window.location.href = "/";
+        }
+    </script>
+</body>
+</html>

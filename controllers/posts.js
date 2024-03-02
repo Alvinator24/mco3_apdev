@@ -1,6 +1,7 @@
 const router = require('express').Router()
 const post = require('../models/post')
 
+const Post = require('../models/post')
 
 // create a post
 router.post('/posts/create', async (req, res) => {
@@ -74,18 +75,30 @@ router.patch('/posts/:id/like', async (req, res) => {
 
 // get all posts of a specific user (timeline)
 router.get('/timeline', async (req, res) => {
-    try {
-        const currentUser = await user.findById(req.body.userId)
-        const userPosts = await post.findById({ userId: currentUser._id })
-        const friendPosts = await Promise.all(
-            currentUser.followings.map(friendId => {
-                post.find({ userId: friendId })
-            })
-        )
-        res.json(userPosts.concat(...friendPosts))
-    } catch (error) {
-        res.status(500).json(error)
-    }
+    // try {
+    //     const currentUser = await user.findById(req.body.userId)
+    //     const userPosts = await post.findById({ userId: currentUser._id })
+    //     const friendPosts = await Promise.all(
+    //         currentUser.followings.map(friendId => {
+    //             post.find({ userId: friendId })
+    //         })
+    //     )
+    //     res.json(userPosts.concat(...friendPosts))
+    // } catch (error) {
+    //     res.status(500).json(error)
+    // }  
 })
 
 // get all posts (homepage)
+router.get('/all', async (req, res) => {
+    try {
+        const posts = await Post.find();
+        res.render('users/homepage', { posts });
+        // res.json(posts);
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }  
+})
+
+module.exports = router

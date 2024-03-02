@@ -1,0 +1,165 @@
+:root{
+    --black: #282828;
+}
+
+html{
+    background-image: url("../../assets/bg3.png");
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+    font-family: 'Comfortaa';
+}
+
+#body{
+    height: 100%;
+    width: 90%;
+    background-color: white;
+    border-radius: 25px;
+    box-shadow: rgb(0, 0, 0) 0px 20px 30px -10px;
+    display: flex;
+}
+
+#leftpane{
+    height: 100%;
+    width: 25%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 0;
+    padding-right: 0;
+    font-family: 'Comfortaa';
+    
+}
+
+#profile{
+    height: 30%;
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    font-size: 35px;
+}
+
+#dp{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+#dpimg{
+    border-radius: 50%;
+    background-image: url("../../assets/profilepic.png");
+    background-size: 100%;
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    border: 1px solid black;
+    z-index: 1;
+}
+
+#settings{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    padding-left: 0;
+}
+
+.settingsbuttons{
+    width: 100%;
+    text-align: left;
+    padding-left: 30px;
+    background-color: transparent;
+    border: 0px;
+    margin-top: 1px;
+    margin-bottom: 1px;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    font-family: Chivo;
+    transition-duration: 0.1s;
+    font-size: 20px;
+    border-radius: 25px;
+}
+
+.settingsbuttons:hover{
+    background-color: #0c3a2e;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.settingsbuttons:active{
+    transform: translateY(2px);
+}
+
+#header{
+    margin: 0;
+    justify-content: center;
+    align-items: center;
+}
+
+#searchinput{
+    padding: 3px 0px 3px 10px;
+}
+
+.rightpane{
+    width: 75%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    
+    border-top-right-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+
+#profilerightpane1{
+    z-index: 3;
+    background-color: white;
+    display: flex;
+}
+
+#profilerightpane2{
+    z-index: 2;
+    margin-left: -75%;
+    background-color: white;
+}
+
+#profilerightpane3{
+    z-index: 1;
+    margin-left: -75%;
+    background-color: white;
+}
+
+label{
+    display: flex;
+    justify-content: center;
+}
+
+#input-file{
+    display: none;
+}
+
+#dp:hover{
+    background-image: none;
+    background-color: white;
+}
+
+#profiletable{
+    padding-top: 50px;
+    padding-left: 0px;
+}

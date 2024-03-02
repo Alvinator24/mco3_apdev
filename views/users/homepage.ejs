@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>Home Page</title>
+        <link rel="icon" type="image/x-icon" href="../../assets/icon.ico">
+        <link rel="stylesheet" href="/css/home_styles.css">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/notebook_styles.css">
+        <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+    </head>
+
+    <body>
+        <div id="header" class="width100 mp0 autocenter greenbg">
+            <div id="logodiv" class="mp0 autocenter">
+                <a href="mco_home_registered.html"><img class="width100" id="logo" src="/css/assets/logo4.png"></a>
+
+            </div>
+            <div class="searchbarcontainer autocenter">
+                <div class="searchbar mp0 autocenter">
+                    <input id="search" type="search" placeholder="Search..."/>
+                </div>
+                <div class="searchbuttoncontainer">
+                    <button class="searchbutton width100 autocenter" type="submit">
+                        <svg class="mg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="headerbuttons" class="mp0 autocenter">
+                <div id="dropdowndiv">
+                    <button class="options" id="dropdownbutton">create</button> 
+                    <div id="optionsdiv" class="dropdowncontent greenbg">
+                        <button class="options">New Post</button>
+                        <button class="options">New Story</button>
+                        <button class="options" id="profilebutton">Profile</button>
+                        <button class="options" id="settingsbutton">Settings</button>
+                        <button class="options">Logout</button>
+                    </div>
+                </div>
+            </div>
+        </div>  
+
+
+        <div class="contents">
+            <div class="main-bg">
+            <div class="main">
+                <aside class="topics autocenter flexcolumn shadow">
+                    <h2 class="section-title">Topics</h2>
+                    <div class="topic-list flexcolumn">
+                        <p class="topic-name name">Trending Music</p>
+                        <p class="topic-name name">Pop</p>
+                        <p class="topic-name name">Concerts and Festival</p>
+                        <p class="topic-name name">Jazz</p>
+                        <p class="topic-name name">Album Reviews</p>
+                    </div>
+
+                    <h2 class="section-title">Communities</h2>
+                    <div class="topic-list">
+                        <p class="comm-name name">Jazz lovers</p>
+                        <p class="comm-name name">Taylornation</p>
+                        <p class="comm-name name">Songwriters' club</p>
+                        <p class="comm-name name">Poets & Composers</p>
+                        <p class="comm-name name">K-pop multifandom</p>
+                    </div>
+
+                    <div class="buttons flexcolumn autocenter"> 
+                        <button id="profilebutton" class="aside-button">Profile</button>
+                        <button id="settingsbutton" class="aside-button">Settings</button>
+    
+                    </div>
+                </aside>
+
+                <div class="forum flexcolumn">
+                    <div id="post-0" class="flexrow
+                    ">
+                        <div class="user"><img src="https://i.pinimg.com/originals/d7/cb/48/d7cb48723d0054d7586cfa927437cf67.jpg"/></div>
+                        <div class="post-box shadow flexcolumn autocenter">
+                            <div class="create-post flexcolumn"> <!-- deleted autocenter-->
+                                <h3 class="new-title">Title: <input type="text"></h3>
+                                <p class="post-text"><textarea class="new-post" placeholder="Write a post..." id="new-post"></textarea></p>
+                               
+
+                            </div>
+
+                            <div class="post-interactions flexrow">
+                                <button class="view-post-button publish" onclick="publish()">publish post</button>
+                                <div class="flexrow autocenter">
+                                    <img class="create-icons" src="https://cdn-icons-png.flaticon.com/512/876/876210.png">
+                                    <img class="create-icons" src="https://pixsector.com/cache/517d8be6/av5c8336583e291842624.png">
+                                    <img class="create-icons" src="https://static.thenounproject.com/png/74417-200.png">
+                                </div>
+                            </div>
+                                
+                        </div>
+                    </div>
+                    <% posts.forEach(post => {%>
+                    <div id="<%= 'post-' + post._id %>" class="flexrow">
+                        <div class="user"><img src="https://tse2.mm.bing.net/th?id=OIP.52L1HoqsjyL47LYaC2CBGwHaKF&pid=Api&P=0&h=180"/></div>
+                        <div class="post-box shadow flexcolumn autocenter">
+                            <div class="post-content">
+                                <h3 class="title"><%= post.title %></h3>
+                                <p class="post-text"><%= post.body %></p>
+
+                            </div>
+
+                            <div class="post-interactions flexrow">
+                                <button class="view-post-button" onclick="viewPost('post-1')">view post</button>
+                                <div class="rating flexrow">
+                                    <img src="/css/assets/like.png" class="like" onclick="react(this, 'post-1')"/>
+                                    <img src="/css/assets/dislike.png" class="dislike" onclick="react(this, 'post-1')"/>
+                                    <img src="/css/assets/share.png" class="share"/>
+                                </div>
+                            </div>
+                                
+                        </div>
+                    </div>
+                    <% }) %>
+                </div>
+
+            </div>
+            </div>
+    
+            <div class="stories-bg">
+            <div class="stories">
+                <div class="story">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREDoSNa-bR2mY_CTu1uxBpsCJ5_StKSsKqdQ&usqp=CAU" class="user-story"/>
+                    <iframe class="music-story" src="https://open.spotify.com/embed/track/0EcQcdcbQeVJn9fknj44Be?utm_source=generator"  frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+
+                <div class="story">
+                    <img src="https://i.pinimg.com/736x/15/c1/ec/15c1ec0f3beb08c3587d65462fd0fc7a.jpg" class="user-story"/>
+                    <iframe class="music-story" src="https://open.spotify.com/embed/track/1RIqzlphRm2btQO0LgHWsN?utm_source=generator" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+
+                <div class="story">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmHAdijohip_-GtG6oN0Owhd6Mxqw1mp_ywg&usqp=CAU" class="user-story"/>
+                    <iframe class="music-story" style="border-radius:12px" src="https://open.spotify.com/embed/track/0ug5NqcwcFR2xrfTkc7k8e?utm_source=generator"  frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+                
+                <div class="story">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXgW0cV-0Le-etmNh9MEWU5Hdr-h-96YP_1w&usqp=CAU" class="user-story"/>
+                    <iframe class="music-story" src="https://open.spotify.com/embed/track/22PMfvdz35fFKYnJyMn077?utm_source=generator"  frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+
+                <div class="story">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0n253bhwP1wy_wAP5NsvCJ0dWHoPhR4GCEWrVVFHWG4qnHhitihxxb8qvJ2DKbC2F08c&usqp=CAU" class="user-story"/>
+                    <iframe class="music-story" src="https://open.spotify.com/embed/track/0CBDY0SfSIaVWnOFrwzSbv?utm_source=generator" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+                
+                <div class="story">
+                    <img src="https://i.pinimg.com/564x/db/e0/22/dbe0222d870ef800cae5ceae65a94059.jpg" class="user-story"/>
+                    <iframe class="music-story" src="https://open.spotify.com/embed/track/6q3zC9dDD4lUNk8nfUztXy?utm_source=generator"  frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+
+                <div class="story">
+                    <img src="https://pyxis.nymag.com/v1/imgs/031/f3a/3dc8d24958c4a3fd3a8487b49a7f71a45f-lofi-girl.1x.rsquare.w1400.png" class="user-story"/>
+                    <iframe class="music-story" src="https://open.spotify.com/embed/track/5wIkUsVhYmYjhr9oRsH9jc?utm_source=generator"  frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+
+                </div>
+    
+            </div>
+        </div>
+
+        </div>
+
+        <!-- scripts -->
+        <script>
+            
+            function react(element, containerId) {
+                // Toggle the 'clicked' class to change the color
+                var container = document.getElementById(containerId);
+                var elements = container.querySelectorAll('.rating img');
+                elements.forEach(function(el) {
+                    if (el !== element && el.classList.contains('clicked')) {
+                        el.classList.remove('clicked');
+                    }
+                });
+                
+                element.classList.toggle('clicked');
+            }
+
+            function viewPost(postID){
+            var openPost = encodeURIComponent(postID) + ".html";
+
+            
+            window.location.href = openPost;
+
+            }
+        </script>
+        <!-- <script type="text/javascript" src="../js/header.js"></script>
+        <script type="text/javascript" src="../js/mco_home_registeredjs.js"></script> -->
+        
+    </body>
+</html>
