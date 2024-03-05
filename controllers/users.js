@@ -5,6 +5,7 @@ const { body, validationResult } = require('express-validator');
 // const session = require('express-session')
 
 const User = require('../models/users')
+const Post = require('../models/post')
 
 // new user route (displaying the form)
 router.get('/register', (req, res) => {
@@ -113,11 +114,24 @@ router.get('/settings', (req, res) => {
 })
 
 // homepage after login
-router.get('/homepage', (req, res) => {
-    res.render('users/homepage', {
-        title: 'Home Page',
-        posts: posts
-    })
-})
+// router.get('/homepage', (req, res) => {
+//     res.render('users/homepage', {
+//         title: 'Home Page',
+//         posts: posts
+//     })
+// })
+
+router.get('/homepage', async (req, res) => {
+    try {
+        const posts = await Post.find();
+        res.render('users/homepage', {
+            title: 'Home Page',
+            posts: posts
+        });
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 module.exports = router
