@@ -27,12 +27,12 @@ body{
 }
 
 .defaultbg{
-    background-image: url("../../assets/bg3.png");
+    background-image: url("/css/assets/bg3.png");
     min-width: 1250px;
 }
 
 .landingbg{
-    background-image: url("../../assets/landingbg.png");
+    background-image: url("/css/assets/landingbg.png");
     min-width: 1250px;
 }
 

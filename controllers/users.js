@@ -6,6 +6,7 @@ const { body, validationResult } = require('express-validator');
 
 const User = require('../models/users')
 const Post = require('../models/post')
+const Comment = require('../models/comment')
 
 // new user route (displaying the form)
 router.get('/register', (req, res) => {
@@ -59,7 +60,7 @@ router.post('/register', (req, res) => {
 
     newUser.save()
     .then((newUser) => {
-        res.redirect('./login')
+        res.redirect('/')
     })
     .catch((error) => {
         res.render('/users/register', {
@@ -133,5 +134,40 @@ router.get('/homepage', async (req, res) => {
         res.status(500).json({ error: 'Internal Server Error' });
     }
 });
+
+router.get('/comments', async (req, res) => {
+    try {
+        const comments = await Comment.find();
+        res.render('users/comments', {
+            title: 'Comments', 
+            comments
+        });
+        // res.json(comments);
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }  
+})
+
+// publish post
+router.post('/homepage', async (req, res) => {
+    try {
+        const { post_title, post_body } = req.body
+
+        const newPost = new Post({
+            title: post_title,
+            body: post_body
+        })
+
+        await newPost.save()
+
+        res.send('New post published!')
+    } catch (error) {
+        res.status(500).send('New post not published: ' + error.message)
+    }
+})
+
+// edit post
+
 
 module.exports = router

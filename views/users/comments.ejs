@@ -2,9 +2,9 @@
 
 <html>
     <head>
-        <title>Post</title>
-        <link rel="stylesheet" href="../style/post_style.css">
-        <link rel="stylesheet" href="../style/header.css">
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/css/post_style.css">
+        <link rel="stylesheet" href="/css/comment_header.css">
         <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
     </head>
 
@@ -29,7 +29,7 @@
         -->
         <div id="header">
             <div id="logodiv">
-                <a href="mco_home_registered.html"><img id="logo" src="../../assets/logo4.png"></a>
+                <a href="mco_home_registered.html"><img id="logo" src="/css/assets/logo4.png"></a>
             </div>
             <div class="searchbarcontainer">
                 <div class="searchbar">
@@ -76,9 +76,10 @@
 
 
                 <ol class="comments">
-                    <li  id="comment-1">
+                    <% comments.forEach(comment => { %>
+                    <li id="<%= 'comment-' + comment._id %>">
                         <div class="comment-text">
-                            <img class="userpfp" src="https://i.pinimg.com/originals/72/37/69/72376954787f8767d5810a90127fcf8c.jpg"/><p class="comment">Mozart's music is timeless. It's incredible to think that his compositions still resonate with people centuries after they were written. 🌟</p>
+                            <img class="userpfp" src="https://i.pinimg.com/originals/72/37/69/72376954787f8767d5810a90127fcf8c.jpg"/><p class="comment"><%= comment.body %></p>
                             <div class="dropdown">
                                 <button onclick="myFunction('dropdown1')" class="dropbtn">&#8942;</button>
                                 <div id="dropdown1" class="dropdown-content">
@@ -92,107 +93,16 @@
                         
                         <div class="comment-interactions">
                             <div class="comm-rate">
-                                <img id="like" src="../../assets/like.png" onclick="react(this, 'comment-1')"><span id="like-num"> 1K </span>
-                                <img id="dislike" src="../../assets/dislike.png" onclick="react(this, 'comment-1')">
+                                <img id="like" src="/css/assets/like.png" onclick="react(this, 'comment-1')"><span id="like-num"> 1K </span>
+                                <img id="dislike" src="/css/assets/dislike.png" onclick="react(this, 'comment-1')">
                              </div>    <span class="reply" onclick="openReplyBox()"> reply </span>
 
                         </div>
                         
                         
                     </li>
-                    <li id="comment-2">
-                        <div class="comment-text">
-                            <img class="userpfp" src="https://wallpapercave.com/dwp1x/wp7479859.jpg"/><p class="comment">Listening to Mozart's piano concertos is like taking a journey through the depths of human emotion. It's both exhilarating and heartbreaking.</p>
-                            <div class="dropdown">
-                                <button onclick="myFunction('dropdown2')" class="dropbtn">&#8942;</button>
-                                <div id="dropdown2" class="dropdown-content">
-                                    <!-- Dropdown content for Button 2 -->
-                                    <a href="">Edit</a>
-                                    <a href="">Delete</a>
-                                    <a href="">Report</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-interactions">
-                            <div class="comm-rate">
-                                <img id="like" src="../../assets/like.png" onclick="react(this, 'comment-2')">
-                                <span id="like-num"> 15 </span>
-                                <img id="dislike" src="../../assets/dislike.png" onclick="react(this, 'comment-2')">
-                             </div>    <span class="reply" onclick="openReplyBox()"> reply </span>
-                        </div>
-                        
-                       
-                    </li>
-                    <li id="comment-3">
-                        <div class="comment-text">
-                            <img class="userpfp" src="https://pm1.narvii.com/7485/d516308e3566230f3ce6861387ea392ce644b340r1-1080-1069v2_hq.jpg"/><p class="comment">It's amazing how Mozart was able to convey so much emotion with just a few notes. He truly was a musical genius.</p>
-                            <div class="dropdown">
-                                <button onclick="myFunction('dropdown3')" class="dropbtn">&#8942;</button>
-                                <div id="dropdown3" class="dropdown-content">
-                                    <!-- Dropdown content for Button 2 -->
-                                    <a href="">Edit</a>
-                                    <a href="">Delete</a>
-                                    <a href="">Report</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-interactions">
-                            <div class="comm-rate">
-                                <img id="like" src="../../assets/like.png" onclick="react(this, 'comment-3')"><span id="like-num"> 78 </span>
-                                <img id="dislike" src="../../assets/dislike.png" onclick="react(this, 'comment-3')">
-                             </div>    <span class="reply" onclick="openReplyBox()"> reply </span>
-
-                        </div>
-                        
-                       
-                    </li>
-                    <li  id="comment-4"> 
-                        <div class="comment-text">  
-                            <img class="userpfp" src="https://i.pinimg.com/originals/ca/ce/98/cace98504b0abb3f83918f9873f07161.jpg"/><p class="comment">Mozart's music is so intricate and beautifully crafted. It's no wonder he's considered one of the greatest composers of all time.</p>
-                            <div class="dropdown">
-                                <button onclick="myFunction('dropdown4')" class="dropbtn">&#8942;</button>
-                                <div id="dropdown4" class="dropdown-content">
-                                    <!-- Dropdown content for Button 2 -->
-                                    <a href="">Edit</a>
-                                    <a href="">Delete</a>
-                                    <a href="">Report</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-interactions">
-                            <div class="comm-rate">
-                                <img id="like" src="../../assets/like.png" onclick="react(this, 'comment-4')"><span id="like-num"> 45 </span>
-                                <img id="dislike" src="../../assets/dislike.png" onclick="react(this, 'comment-4')">
-                             </div>    <span class="reply" onclick="openReplyBox()"> reply </span>
-                           
-                        </div>
-                     
-                    </li>
-                    <li  id="comment-5">
-                        <div class="comment-text">
-                            <img class="userpfp" src="https://i.pinimg.com/originals/aa/59/f9/aa59f958a574abda4b52dc204ff114a3.jpg"/><p class="comment">There's something about Mozart's music that just speaks to the soul. It's like he knew exactly how to tap into our deepest emotions.</p>
-                            <div class="dropdown">
-                                <button onclick="myFunction('dropdown5')" class="dropbtn">&#8942;</button>
-                                <div id="dropdown5" class="dropdown-content">
-                                    <!-- Dropdown content for Button 2 -->
-                                    <a href="">Edit</a>
-                                    <a href="">Delete</a>
-                                    <a href="">Report</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="comment-interactions">
-
-                        </div>
-                        <div class="comment-interactions">
-                            <div class="comm-rate">
-                                <img id="like" src="../../assets/like.png" onclick="react(this, 'comment-5')"><span id="like-num"> 253 </span>
-                                <img id="dislike" src="../../assets/dislike.png"  onclick="react(this, 'comment-5')">
-                            </div>    
-                            <span class="reply" onclick="openReplyBox()"> reply </span>
-                        </div>
-                       
-                    </li> 
+                    <% }) %>
+ 
                 </ol>
             </article>
 
@@ -214,8 +124,82 @@
                 element.classList.toggle('clicked');
             }
         </script>
-        <script type="text/javascript" src="../js/header.js"></script>
-        <script type="text/javascript" src="../js/post.js"></script>
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+    
+
+                const header = document.querySelector('#header');
+                document.querySelector(".searchbarcontainer").style.height = getComputedStyle(header).height;
+            
+            
+                const searchButton = document.querySelector(".searchbutton");
+                const searchBar = document.querySelector(".searchbar");
+                const searchBarHeight = getComputedStyle(searchBar).height;
+                searchButton.style.height = searchBarHeight;
+            
+                const dropbutton = document.getElementById("dropdownbutton");
+                const optionsdiv = document.getElementById("optionsdiv");
+                dropbutton.addEventListener("mouseenter", function(){
+                    optionsdiv.classList.toggle("show");
+                });
+            
+                window.onclick = function(event) {
+                    if (!event.target.matches('#dropdownbutton')) {
+                        var dropdowns = document.getElementsByClassName("dropdowncontent");
+                        var i;
+                        for (i = 0; i < dropdowns.length; i++) {
+                            var openDropdown = dropdowns[i];
+                            if (openDropdown.classList.contains('show')) {
+                                openDropdown.classList.remove('show');
+                            }
+                        }
+                    }
+                }
+            
+                const profilebutton = document.getElementById("profilebutton");
+                const settingsbutton = document.getElementById("settingsbutton");
+                
+                
+                settingsbutton.addEventListener("click", function(){
+                    window.location.href = 'settings.html';
+                });
+                profilebutton.addEventListener("click", function(){
+                    window.location.href = 'userprofile_rosales.html';
+                });
+            
+                const html = document.documentElement;
+                const headerbg = document.getElementById("header");
+                const dmodetoggle = document.getElementById("dmodetoggle");
+                const body = document.getElementById("body");
+            
+                dmodetoggle.addEventListener("click", function(){
+                    headerbg.classList.toggle("blackbg");
+                    body.classList.toggle("graybg");
+                });
+            
+            
+            });            
+        </script>
+        <script>
+            function myFunction(dropdownId) {
+                var dropdown = document.getElementById(dropdownId);
+                dropdown.classList.toggle("show");
+            }
+            
+            // Close the dropdown menu if the user clicks outside of it
+            window.onclick = function (event) {
+                if (!event.target.matches('.dropbtn')) {
+                    var dropdowns = document.getElementsByClassName("dropdown-content");
+                    var i;
+                    for (i = 0; i < dropdowns.length; i++) {
+                        var openDropdown = dropdowns[i];
+                        if (openDropdown.classList.contains('show')) {
+                            openDropdown.classList.remove('show');
+                        }
+                    }
+                }
+            }
+        </script>
         
     </body>
 </html>
