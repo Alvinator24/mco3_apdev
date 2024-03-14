@@ -87,7 +87,7 @@ router.post('/login', async (req, res) => {
       const findUser = await User.findOne({ username })
   
       if (!findUser) {
-        console.log('Invalid username')
+        console.log('User does not exist!')
         return res.redirect('./login')
       }
   
@@ -141,6 +141,7 @@ router.get('/comments', async (req, res) => {
         res.render('users/comments', {
             title: 'Comments', 
             comments
+            // comments: comments
         });
         // res.json(comments);
     } catch (error) {
@@ -161,13 +162,53 @@ router.post('/homepage', async (req, res) => {
 
         await newPost.save()
 
-        res.send('New post published!')
+        // res.send('New post published!')
+        res.redirect('./homepage')
     } catch (error) {
         res.status(500).send('New post not published: ' + error.message)
     }
 })
 
 // edit post
+router.get('/editpost', async (req, res) => {
+    res.render('users/editpost')
+})
+
+// delete a post
+router.delete('/homepage/:postId', async (req, res) => {
+    try {
+        const postId = req.params.postId;
+
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).send('Post not found');
+        }
+
+        await Post.findByIdAndDelete(postId);
+
+        res.send('Post deleted successfully!');
+    } catch (error) {
+        res.status(500).send('Failed to delete post: ' + error.message);
+    }
+});
+
+// publish comment
+router.post('/comments', async (req, res) => {
+    try {
+        const { comment } = req.body
+
+        const newComment = new Comment({
+            body: comment
+        })
+
+        await newComment.save()
+
+        // res.send('New comment published!')
+        res.redirect('./comments')
+    } catch (error) {
+        res.status(500).send('New comment not published: ' + error.message)
+    }
+})
 
 
 module.exports = router

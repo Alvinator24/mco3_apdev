@@ -271,7 +271,7 @@ h2{
     justify-content: space-between;
 }
 
-.view-post-button{
+.view-post-button, .edit-post-button, .delete-post-button{
     width: 45%;
     height: 30px;
     background-color: var(--brown);
@@ -282,6 +282,7 @@ h2{
     border-radius: 25px;
     border:none;
     padding: 5px;
+    margin: 2px;
 
 }
 

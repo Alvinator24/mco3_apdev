@@ -146,6 +146,10 @@
     font-family: 'Comfortaa';
 }
 
+#logo-editpost {
+    height: 40px;
+}
+
 /* .search{
     height: 100%;
     flex: 1;

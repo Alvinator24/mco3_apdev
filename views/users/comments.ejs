@@ -63,7 +63,7 @@
 
             <article>
 
-                <div class="new-comment-area">
+                <!-- <div class="new-comment-area">
                     <div class="new-comment">
                         <img class="userpfp" src="https://64.media.tumblr.com/821f1a7cf8af5ea6ce73271d5965a794/0c806963e6b54cef-4a/s640x960/5d2467aa3b480548fff5c4c58b44903710b548f6.jpg">
                         <textarea placeholder="Add a comment..."></textarea>
@@ -72,7 +72,17 @@
                     
                     <div class="publish-comment" >publish comment</div>    
 
-                </div>
+                </div> -->
+
+                <form id="comment-form" action="/users/comments" method="POST">
+                    <div class="new-comment-area">
+                        <div class="new-comment">
+                            <img class="userpfp" src="https://64.media.tumblr.com/821f1a7cf8af5ea6ce73271d5965a794/0c806963e6b54cef-4a/s640x960/5d2467aa3b480548fff5c4c58b44903710b548f6.jpg">
+                            <textarea name="comment" id="comment" placeholder="Add a comment..."></textarea>
+                        </div>
+                        <input type="submit" class="publish-comment" value="publish">
+                    </div>
+                </form>
 
 
                 <ol class="comments">

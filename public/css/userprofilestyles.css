@@ -1,0 +1,231 @@
+html{
+    background-image: url("../../assets/bg2.png");
+    background-size: cover;
+    overflow-x: hidden;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+    padding: 0;
+    margin: 0;
+}
+
+.rectholder{
+    background-color: white;
+    margin: 10px;
+    border-radius: 25px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    align-content: center;
+    box-shadow: 0px 10px 10px 0px rgb(0, 0, 0);
+    width: 100%;
+    text-align: center;
+}
+
+#firstcol{
+    width: 40%;
+    height: 100;
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+    align-self: flex-start;
+    
+}
+
+#secondcol{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-content: center;
+    width: 50%;
+}
+
+#details{
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    margin: 0;
+    margin-bottom: 10px;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+}
+
+#divide{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+}
+
+#topsongs, #topartists{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+}
+
+#profile{
+    flex-direction: column;
+    height: fit-content;
+    width: 100%;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 0;
+    padding-right: 0;
+
+    align-self: flex-start;
+    justify-content: flex-start;
+    align-content: flex-start;
+    top: 8%;
+    
+}
+
+#body{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    align-items: center;
+    align-content: center;
+    height: 100%;
+    width: 100%;
+}
+
+#dp{
+    background-image: url("../../assets/profilepic.png");
+    background-size: 100%;
+    border-radius: 50%;
+    height: 200px;
+    width: 200px;
+    border: 1px solid black;
+}
+
+#profiletext{
+    text-align: center;
+    height: 100%;
+    width: 100%;
+}
+
+.albumimage{
+    margin-top: 3px;
+    margin-bottom: 3px;
+    margin-left: 0;
+    margin-right: 0;
+    padding: 0;
+    border-radius: 12px;
+    width: 100%;
+    height: 152px;
+    border: 0;
+}
+
+
+
+#badgerep{
+    width: 100%;
+}
+
+
+#profilepic{
+    transition-duration: 0.5s;
+}
+
+#profilepic > input{
+    display: none;
+}
+
+#dp:hover {
+    background-image: none;
+    background-color: #eef5ee;
+    cursor: pointer;
+}
+
+p{
+    font-family: 'Comfortaa', sans-serif;
+}
+
+#deetstable{
+    text-align: left;
+}
+
+td{
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 150px;
+    padding-right: 150px;
+}
+
+.editbuttons, .savebuttons{
+    background-color: #eef5ee; /* Green */
+    border: 2px solid #0c3a2d;
+    color: #0c3a2d;
+    padding: 7px 45px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    border-radius: 25px;
+    transition-duration: 0.2s;
+}
+
+.editbuttons:hover{
+    background-color: #0c3a2d;
+    color: white;
+    box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    cursor: pointer;
+}
+
+.savebuttons{
+    cursor: not-allowed;
+}
+
+.editbuttons:active{
+    background-color: #0c3a2d;
+    box-shadow: 0 5px #666;
+    transform: translateY(2px);
+}
+
+#editimage{
+    background-color: transparent;
+    border: 0;
+}
+
+.posts{
+    width: 80%;
+    padding: 10px;
+    padding-bottom: 10px;
+    border: 2px solid #fec552;
+    border-radius: 25px;
+    margin-bottom: 30px;
+}
+
+
+.postsbuttons{
+    font-size: 13px;
+    font-family: 'Comfortaa';
+    padding: 10px 20px 10px 20px;
+    background-color: #BB8A52;
+    color: white;
+    border: 0;
+    border-radius: 25px;
+}
+
+.postsbuttons:hover{
+    background-color: #0c3a2d;
+    color: #BB8A52;
+    transform: translateY(-2px);
+}
+
+.postsbuttons:active{
+    transform: translateY(2px);
+}

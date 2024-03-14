@@ -8,6 +8,10 @@ const postSchema = new mongoose.Schema({
     body: {
         type: String,
         required: true
+    },
+    upvotes: {
+        type: Number,
+        default: 5
     }
 })
 
