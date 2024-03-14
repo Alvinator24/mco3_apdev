@@ -87,7 +87,7 @@
 
                 <ol class="comments">
                     <% comments.forEach(comment => { %>
-                    <li id="<%= 'comment-' + comment._id %>">
+                    <li id="<%= comment._id %>">
                         <div class="comment-text">
                             <img class="userpfp" src="https://i.pinimg.com/originals/72/37/69/72376954787f8767d5810a90127fcf8c.jpg"/><p class="comment"><%= comment.body %></p>
                             <div class="dropdown">
