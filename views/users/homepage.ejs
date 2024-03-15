@@ -30,11 +30,11 @@
             </div>
             <div id="headerbuttons" class="mp0 autocenter">
                 <div id="dropdowndiv">
-                    <button class="options" id="dropdownbutton">create</button> 
+                    <!-- <button class="options" id="dropdownbutton">create</button> 
                     <div id="optionsdiv" class="dropdowncontent greenbg">
                         <button class="options" id="settingsbutton">Settings</button>
                         <button class="options" id="logout-btn">Logout</button>
-                    </div>
+                    </div> -->
                 </div>
             </div>
         </div>  
@@ -62,11 +62,11 @@
                         <p class="comm-name name">K-pop multifandom</p>
                     </div>
 
-                    <!-- <div class="buttons flexcolumn autocenter"> 
-                        <button id="profilebutton" class="aside-button">Profile</button>
+                    <div class="buttons flexcolumn autocenter"> 
+                        <!-- <button id="profilebutton" class="aside-button">Profile</button> -->
                         <button id="settingsbutton" class="aside-button">Settings</button>
-    
-                    </div> -->
+                        <button id="logoutbutton" class="aside-button">Logout</button>
+                    </div>
                 </aside>
 
                 <div class="forum flexcolumn">
@@ -281,10 +281,11 @@
         </script>
 
         <script>
-            const logoutbutton = document.getElementById("logout-btn")
+            // const logoutbutton = document.getElementById("logout-btn")
             const editPost = document.getElementsByClassName("edit-post-button")
-                
-            logoutbutton.addEventListener("click", function(){
+            const logout = document.getElementById("logoutbutton")
+
+            logout.addEventListener("click", function(){
                 window.location.href = '/'
             })
             
