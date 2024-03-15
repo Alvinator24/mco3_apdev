@@ -160,7 +160,7 @@ h2{
     cursor: pointer;
 }
 
-.aside-button:hover, .view-post-button:hover{
+.aside-button:hover, .view-post-button:hover, .community-dropdown:hover{
     background-color:  var(--green);
     color: var(--yellow);
 }
@@ -261,6 +261,7 @@ h2{
     flex-direction: row;
     justify-content: space-between;
     padding-bottom: 20px;
+    gap:10px;
 }
 
 .rating{
@@ -271,7 +272,7 @@ h2{
     justify-content: space-between;
 }
 
-.view-post-button, .edit-post-button, .delete-post-button{
+.view-post-button, .community-dropdown, .edit-post-button, .delete-post-button{
     width: 45%;
     height: 30px;
     background-color: var(--brown);
@@ -282,7 +283,6 @@ h2{
     border-radius: 25px;
     border:none;
     padding: 5px;
-    margin: 2px;
 
 }
 
@@ -333,9 +333,9 @@ h2{
     align-items: center;
 }
 
-.post-content{
-    height: 200px-40px;
-    width: 95%-40px;
+.post-content{ /*modified height and width*/
+    height: 160px;
+    width: 85%;
     margin: 10px;
     border-radius: 25px;
     border: 2px solid var(--yellow);
@@ -390,4 +390,9 @@ h2{
 
 .shadow {
     box-shadow: 0px 10px 10px 0px rgb(59, 59, 59);
+}
+
+#post-form{ /*added style*/
+    width:95%;
+    margin-right: -10px;
 }

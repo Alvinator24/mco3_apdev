@@ -210,5 +210,26 @@ router.post('/comments', async (req, res) => {
     }
 })
 
+// upvote a post
+router.post('/homepage', async (req, res) => {
+    try {
+        const postId = req.params.postId;
+
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).send('Post not found');
+        }
+
+        post.upvotes += 1;
+
+        await post.save();
+
+        // res.send('Post upvoted successfully!');
+        res.redirect('./homepage')
+    } catch (error) {
+        res.status(500).send('Failed to upvote post: ' + error.message);
+    }
+});
+
 
 module.exports = router

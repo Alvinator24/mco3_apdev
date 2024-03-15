@@ -44,14 +44,14 @@
             <div class="main-bg">
             <div class="main">
                 <aside class="topics autocenter flexcolumn shadow">
-                    <h2 class="section-title">Topics</h2>
+                    <!-- <h2 class="section-title">Topics</h2>
                     <div class="topic-list flexcolumn">
                         <p class="topic-name name">Trending Music</p>
                         <p class="topic-name name">Pop</p>
                         <p class="topic-name name">Concerts and Festival</p>
                         <p class="topic-name name">Jazz</p>
                         <p class="topic-name name">Album Reviews</p>
-                    </div>
+                    </div> -->
 
                     <h2 class="section-title">Communities</h2>
                     <div class="topic-list">
@@ -62,11 +62,11 @@
                         <p class="comm-name name">K-pop multifandom</p>
                     </div>
 
-                    <div class="buttons flexcolumn autocenter"> 
+                    <!-- <div class="buttons flexcolumn autocenter"> 
                         <button id="profilebutton" class="aside-button">Profile</button>
                         <button id="settingsbutton" class="aside-button">Settings</button>
     
-                    </div>
+                    </div> -->
                 </aside>
 
                 <div class="forum flexcolumn">
@@ -81,6 +81,18 @@
 
                             <div class="post-interactions flexrow">
                                 <!-- <button class="view-post-button publish">publish</button> -->
+                                <select class="community-dropdown" id="community-dropdown">
+                                    <option value="default">Choose a community</option>
+                                    <option value="Trending Music">Trending Music</option>
+                                    <option value="Pop">Pop</option>
+                                    <option value="Concerts and Festival">Concerts and Festival</option>
+                                    <option value="Jazz">Jazz</option>
+                                    <option value="Album Reviews">Album Reviews</option>
+                                    <option value="Taylornation">Taylornation</option>
+                                    <option value="Songwriters' club">Songwriters' club</option>
+                                    <option value="Poets & Composers">Poets & Composers</option>
+                                    <option value="K-pop multifandom">K-pop multifandom</option>
+                                </select>
                                 <input type="submit" class="view-post-button publish" value="publish">
                                 <div class="flexrow autocenter">
                                     <img class="create-icons" src="https://cdn-icons-png.flaticon.com/512/876/876210.png">
