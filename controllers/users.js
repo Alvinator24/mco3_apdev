@@ -114,6 +114,21 @@ router.get('/settings', (req, res) => {
     })
 })
 
+// homepage not logged in
+router.get('/notloggedinhomepage', async (req, res) => {
+    try {
+        const posts = await Post.find();
+        res.render('users/notloggedinhomepage', {
+            title: 'Home Page',
+            posts: posts
+        });
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// homepage logged in
 router.get('/homepage', async (req, res) => {
     try {
         const posts = await Post.find();
