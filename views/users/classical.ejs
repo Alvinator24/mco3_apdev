@@ -93,7 +93,7 @@
                             </form>
                         </div>
                     </div>
-                    <% posts.forEach(post => {%>
+                    <% posts.filter(post => post.community === 'Classical').forEach(post => {%>
                         <div id="<%= post._id %>" class="flexrow">
                             <div class="user"><img src="https://tse2.mm.bing.net/th?id=OIP.52L1HoqsjyL47LYaC2CBGwHaKF&pid=Api&P=0&h=180"/></div>
                             <div class="post-box shadow flexcolumn autocenter">

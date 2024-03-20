@@ -244,5 +244,88 @@ router.get('/editcomment', async (req, res) => {
     res.render('users/editcomment')
 })
 
+// classical
+router.get('/classical', async (req, res) => {
+    try {
+        const posts = await Post.find();
+        res.render('users/classical', {
+            title: 'Home Page',
+            posts: posts
+        });
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// country
+router.get('/country', async (req, res) => {
+    try {
+        const posts = await Post.find();
+        res.render('users/country', {
+            title: 'Home Page',
+            posts: posts
+        });
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// hip hop
+router.get('/hiphop', async (req, res) => {
+    try {
+        const posts = await Post.find();
+        res.render('users/hiphop', {
+            title: 'Home Page',
+            posts: posts
+        });
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// jazz
+router.get('/jazz', async (req, res) => {
+    try {
+        const posts = await Post.find();
+        res.render('users/jazz', {
+            title: 'Home Page',
+            posts: posts
+        });
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// pop
+router.get('/pop', async (req, res) => {
+    try {
+        const posts = await Post.find();
+        res.render('users/pop', {
+            title: 'Home Page',
+            posts: posts
+        });
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// rock
+router.get('/rock', async (req, res) => {
+    try {
+        const posts = await Post.find();
+        res.render('users/rock', {
+            title: 'Home Page',
+            posts: posts
+        });
+    } catch (error) {
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
 
 module.exports = router
