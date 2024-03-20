@@ -224,3 +224,7 @@
     .options:active{
         transform: translateY(2px);
     }
+
+.reply {
+    margin-right: 10px;
+}

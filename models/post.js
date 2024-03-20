@@ -9,6 +9,10 @@ const postSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    community: {
+        type: String,
+        required: true
+    },
     upvotes: {
         type: Number,
         default: 5

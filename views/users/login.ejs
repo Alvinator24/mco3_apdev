@@ -45,6 +45,10 @@
                     <a>Forgot password?</a>
                 </div>
 
+                <!-- <div>
+                    <button id="backButton">back</button>
+                </div> -->
+
                 <input type="submit" value="login" id="login">
             </form>
         </div>
@@ -71,6 +75,14 @@
                 }
             }
         }
+    </script>
+
+    <script>
+        const back = document.getElementById("backButton");
+        
+        back.addEventListener("click", function(){
+            window.location.href = "/";
+        })
     </script>
 </body>
 </html>

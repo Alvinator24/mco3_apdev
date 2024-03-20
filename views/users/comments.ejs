@@ -90,22 +90,24 @@
                     <li id="<%= comment._id %>">
                         <div class="comment-text">
                             <img class="userpfp" src="https://i.pinimg.com/originals/72/37/69/72376954787f8767d5810a90127fcf8c.jpg"/><p class="comment"><%= comment.body %></p>
-                            <div class="dropdown">
-                                <button onclick="myFunction('dropdown1')" class="dropbtn">&#8942;</button>
-                                <div id="dropdown1" class="dropdown-content">
+                            <!-- <div class="dropdown"> -->
+                                <!-- <button onclick="myFunction('dropdown1')" class="dropbtn">&#8942;</button> -->
+                                <!-- <div id="dropdown1" class="dropdown-content"> -->
                                     <!-- Dropdown content for Button 2 -->
-                                    <a href="">Edit</a>
-                                    <a href="">Delete</a>
-                                    <a href="">Report</a>
-                                </div>
-                            </div>
+                                    <!-- <a href="editcomment">Edit</a> -->
+                                    <!-- <a href="">Delete</a> -->
+                                    <!-- <a href="">Report</a> -->
+                                <!-- </div> -->
+                            <!-- </div> -->
                         </div>
                         
                         <div class="comment-interactions">
                             <div class="comm-rate">
                                 <img id="like" src="/css/assets/like.png" onclick="react(this, 'comment-1')"><span id="like-num"> 1K </span>
                                 <img id="dislike" src="/css/assets/dislike.png" onclick="react(this, 'comment-1')">
-                             </div>    <span class="reply" onclick="openReplyBox()"> reply </span>
+                             </div>    
+                             <span class="reply" onclick="openReplyBox()"> edit </span>
+                             <span class="reply" onclick="openReplyBox()"> delete </span>
 
                         </div>
                         

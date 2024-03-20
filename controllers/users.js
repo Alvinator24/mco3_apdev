@@ -114,14 +114,6 @@ router.get('/settings', (req, res) => {
     })
 })
 
-// homepage after login
-// router.get('/homepage', (req, res) => {
-//     res.render('users/homepage', {
-//         title: 'Home Page',
-//         posts: posts
-//     })
-// })
-
 router.get('/homepage', async (req, res) => {
     try {
         const posts = await Post.find();
@@ -153,11 +145,12 @@ router.get('/comments', async (req, res) => {
 // publish post
 router.post('/homepage', async (req, res) => {
     try {
-        const { post_title, post_body } = req.body
+        const { post_title, post_body, community } = req.body
 
         const newPost = new Post({
             title: post_title,
-            body: post_body
+            body: post_body,
+            community
         })
 
         await newPost.save()
@@ -230,6 +223,11 @@ router.post('/homepage', async (req, res) => {
         res.status(500).send('Failed to upvote post: ' + error.message);
     }
 });
+
+// edit comment
+router.get('/editcomment', async (req, res) => {
+    res.render('users/editcomment')
+})
 
 
 module.exports = router
