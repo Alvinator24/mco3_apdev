@@ -130,11 +130,15 @@ router.get('/notloggedinhomepage', async (req, res) => {
 
 // homepage logged in
 router.get('/homepage', async (req, res) => {
+    const searchQuery = req.query.search;
+    console.log('Search Query:', searchQuery);
+
     try {
         const posts = await Post.find();
         res.render('users/homepage', {
             title: 'Home Page',
-            posts: posts
+            posts: posts,
+            searchQuery: searchQuery
         });
     } catch (error) {
         console.error('Error fetching posts:', error);
@@ -219,7 +223,7 @@ router.post('/comments', async (req, res) => {
 })
 
 // upvote a post
-router.post('/homepage', async (req, res) => {
+router.patch('/homepage', async (req, res) => {
     try {
         const postId = req.params.postId;
 

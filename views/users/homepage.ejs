@@ -17,8 +17,9 @@
 
             </div>
             <div class="searchbarcontainer autocenter">
+                <form id="search-form" action="/users/homepage" name="search" method="GET">
                 <div class="searchbar mp0 autocenter">
-                    <input id="search" type="search" placeholder="Search..."\>
+                    <input id="search" name="search" type="search" placeholder="Search..."\>
                 </div>
                 <div class="searchbuttoncontainer">
                     <button class="searchbutton width100 autocenter" type="submit">
@@ -27,6 +28,7 @@
                         </svg>
                     </button>
                 </div>
+                </form>
             </div>
             <div id="headerbuttons" class="mp0 autocenter">
                 <div id="dropdowndiv">
@@ -93,7 +95,8 @@
                             </form>
                         </div>
                     </div>
-                    <% posts.forEach(post => {%>
+                    <% const filteredPosts = posts.filter(post => post.title.includes(String(searchQuery)))%>
+                    <% filteredPosts.forEach(post => {%>
                         <div id="<%= post._id %>" class="flexrow">
                             <div class="user"><img src="https://tse2.mm.bing.net/th?id=OIP.52L1HoqsjyL47LYaC2CBGwHaKF&pid=Api&P=0&h=180"/></div>
                             <div class="post-box shadow flexcolumn autocenter">
