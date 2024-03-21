@@ -131,7 +131,6 @@ router.get('/notloggedinhomepage', async (req, res) => {
 // homepage logged in
 router.get('/homepage', async (req, res) => {
     const searchQuery = req.query.search;
-    console.log('Search Query:', searchQuery);
 
     try {
         const posts = await Post.find();

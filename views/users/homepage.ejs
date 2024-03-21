@@ -95,7 +95,7 @@
                             </form>
                         </div>
                     </div>
-                    <% const filteredPosts = posts.filter(post => post.title.includes(String(searchQuery)))%>
+                    <% const filteredPosts = searchQuery ? posts.filter(post => post.title.toLowerCase().includes(String(searchQuery).toLowerCase())) : posts;%>
                     <% filteredPosts.forEach(post => {%>
                         <div id="<%= post._id %>" class="flexrow">
                             <div class="user"><img src="https://tse2.mm.bing.net/th?id=OIP.52L1HoqsjyL47LYaC2CBGwHaKF&pid=Api&P=0&h=180"/></div>
@@ -103,7 +103,7 @@
                                 <div class="post-content">
                                     <h3 class="title"><%= post.title %></h3>
                                     <p class="post-text"><%= post.body %></p>
-    
+
                                 </div>
     
                                 <div class="post-interactions flexrow">
