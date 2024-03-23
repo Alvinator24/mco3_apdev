@@ -155,7 +155,7 @@ router.get('/comments', async (req, res) => {
         });
         // res.json(comments);
     } catch (error) {
-        console.error('Error fetching posts:', error);
+        console.error('Error fetching comments:', error);
         res.status(500).json({ error: 'Internal Server Error' });
     }  
 })
@@ -180,24 +180,53 @@ router.post('/homepage', async (req, res) => {
     }
 })
 
-// edit post
-router.get('/editpost', async (req, res) => {
-    res.render('users/editpost')
-})
+// get editpost page
+// router.get('/homepage', async (req, res) => {
+//     res.redirect('./editpost')
+//     res.send('welcome to edit post')
+// })
 
-// delete a post
-router.delete('/homepage/:postId', async (req, res) => {
+// get edit post
+router.get('/editpost/:id', async (req, res) => {
     try {
-        const postId = req.params.postId;
-
+        const postId = req.params.id;
         const post = await Post.findById(postId);
+
         if (!post) {
             return res.status(404).send('Post not found');
         }
 
-        await Post.findByIdAndDelete(postId);
+        res.render('users/editpost', {
+            title: 'Edit Page',
+            post: post,
+        });
+    } catch (error) {
+        console.error('Error fetching post:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
 
-        res.send('Post deleted successfully!');
+// put edit post
+router.put('/editpost/:id', async (req, res) => {
+    try {
+        await Post.findByIdAndUpdate(req.params.id, {
+            title: req.body.post_title,
+            body: req.body.post_body,
+            community: req.body.community
+        })
+        res.redirect('../homepage')
+    } catch (error) {
+        console.error('Error updating post:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+
+// delete a post
+router.delete('/homepage/:id', async (req, res) => {
+    try {
+        const postId = req.params.id;
+        await Post.findByIdAndDelete({_id: postId});
+        res.redirect('./homepage')
     } catch (error) {
         res.status(500).send('Failed to delete post: ' + error.message);
     }
@@ -213,8 +242,7 @@ router.post('/comments', async (req, res) => {
         })
 
         await newComment.save()
-
-        // res.send('New comment published!')
+        
         res.redirect('./comments')
     } catch (error) {
         res.status(500).send('New comment not published: ' + error.message)

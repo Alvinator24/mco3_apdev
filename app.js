@@ -1,6 +1,7 @@
 const express = require('express')
 const app = express()
 const expressLayouts = require('express-ejs-layouts')
+const methodOverride = require('method-override')
 
 // const bodyParser = require('body-parser')
 
@@ -16,8 +17,11 @@ app.set('views', __dirname + '/views')
 app.set('layout', 'layouts/layout')
 app.use(expressLayouts)
 
-app.use(express.json()); 
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+
+// method-override middleware
+app.use(methodOverride('_method'))
 
 const mongoose = require('mongoose')
 mongoose.connect('mongodb+srv://vinator:apdev123@cluster0.l7spucv.mongodb.net/apdev')

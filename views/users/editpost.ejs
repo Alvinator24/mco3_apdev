@@ -1,44 +1,52 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <title>Edit Post</title>
-        <link rel="stylesheet" href="/css/edit_post_style.css">
-        <link rel="stylesheet" href="/css/header.css">
-        <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
-    </head>
+<head>
+    <title><%= title %></title>
+    <link rel="stylesheet" href="/css/edit_post_style.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+</head>
 
-    <body>
+<body>
 
-        <div id="header">
-            <div id="logodiv">
-                <a href="homelog.html"><img id="logo-editpost" src="/css/assets/logo4.png"></a>
-            </div>
-            <div id="searchbar">
-    
-            </div>
-            <div id="headerbuttons">
-    
-            </div>
-        </div>
+<div id="header">
+    <div id="logodiv">
+        <a href="homelog.html"><img id="logo-editpost" src="/css/assets/logo4.png"></a>
+    </div>
+    <div id="searchbar">
 
+    </div>
+    <div id="headerbuttons">
 
-        <form class="contents">
-            <div class="user">
-                <img class="userpfp" src="https://tse2.mm.bing.net/th?id=OIP.52L1HoqsjyL47LYaC2CBGwHaKF&pid=Api&P=0&h=180"/>
-                <div class="username">@username</div>
-            </div>
+    </div>
+</div>
 
-            <div class="post-content">
-                <textarea type="text" id="title" class="title" maxlength="100">Unveiling the Timeless Genius of Mozart: A Symphony of Perfection</textarea>
-            </div>
+<form class="contents" method="POST" action="/users/editpost/<%= post._id %>?_method=PUT">
+    <div class="user">
+        <img class="userpfp" src="https://tse2.mm.bing.net/th?id=OIP.52L1HoqsjyL47LYaC2CBGwHaKF&pid=Api&P=0&h=180"/>
+        <div class="username">username</div>
+    </div>
 
-            <div class="post-content">
-                <textarea id="post-text" class="post-text" maxlength="1000">Mozart's timeless compositions continue to enchant listeners with their exquisite melodies and unparalleled craftsmanship. Dive into the symphonies and piano concertos of this legendary composer, whose music speaks to universal emotions of joy, sorrow, and longing, transcending the constraints of time and leaving an enduring legacy for generations to come.</textarea>
-            </div>
+    <div class="post-content">
+        <textarea type="text" id="title" name="post_title" class="title" maxlength="100"><%= post.title %></textarea>
+    </div>
 
-            <input id="save" class="save-edit" type="submit" value="Save Edits"/>
-        </form>
+    <div class="post-content">
+        <textarea id="post-text" name="post_body" class="post-text" maxlength="1000"><%= post.body %></textarea>
+    </div>
 
-        
-    </body>
+    <select class="community-dropdown" id="community-dropdown" name="community">
+        <option value="default">Choose a community</option>
+        <option value="Classical" <%= post.community === 'Classical' ? 'selected' : '' %>>Classical</option>
+        <option value="Country" <%= post.community === 'Country' ? 'selected' : '' %>>Country</option>
+        <option value="Hip Hop" <%= post.community === 'Hip Hop' ? 'selected' : '' %>>Hip Hop</option>
+        <option value="Jazz" <%= post.community === 'Jazz' ? 'selected' : '' %>>Jazz</option>
+        <option value="Pop" <%= post.community === 'Pop' ? 'selected' : '' %>>Pop</option>
+        <option value="Rock" <%= post.community === 'Rock' ? 'selected' : '' %>>Rock</option>
+    </select>
+
+    <input id="save" class="save-edit" type="submit" value="Save Edits"/>
+</form>
+
+</body>
 </html>
