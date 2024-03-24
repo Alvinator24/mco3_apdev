@@ -46,6 +46,11 @@
     </select>
 
     <input id="save" class="save-edit" type="submit" value="Save Edits"/>
+    
+</form>
+
+<form action="/users/editpost/<%= post._id %>?_method=DELETE" method="POST">
+    <input id="delete" class="delete-post" type="submit" value="Delete Post"/>
 </form>
 
 </body>

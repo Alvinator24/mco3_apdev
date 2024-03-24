@@ -73,7 +73,7 @@ textarea{
     font-weight: bolder;
 }
 
-.save-edit{
+.save-edit, .delete-post{
     outline: none;
     padding: 10px;
     border: none;

@@ -109,16 +109,13 @@
                                 <div class="post-interactions flexrow">
                                     <button class="view-post-button" id="view-post">view post</button>
                                     <a href="./editpost/<%= post._id %>" class="edit-post-button" id="edit-post">edit</a>
-                                    <form action="/users/homepage/<%= posts._id %>?_method=DELETE" method="POST">
-                                        <button class="delete-post-button">delete</button>
-                                    </form>
                                     
                                     
                                     <div class="rating flexrow">
                                         <span id="upvote-count"><%= post.upvotes %></span>
                                         <img src="/css/assets/like.png" class="like" onclick="upvotePost('<%= post._id %>')" />
                                         <img src="/css/assets/dislike.png" class="dislike" onclick="react(this, 'post-1')"/>
-                                        <img src="/css/assets/share.png" class="share"/>
+                                        <!-- <img src="/css/assets/share.png" class="share"/> -->
                                     </div>
                                 </div>
                                     
