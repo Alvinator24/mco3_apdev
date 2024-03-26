@@ -2,7 +2,6 @@ const express = require('express')
 const router = express.Router()
 const bcrypt = require('bcrypt')
 const { body, validationResult } = require('express-validator');
-// const session = require('express-session')
 
 const User = require('../models/users')
 const Post = require('../models/post')
@@ -16,59 +15,32 @@ router.get('/register', (req, res) => {
 })
 
 // register new user
-router.post('/register', (req, res) => {
+router.post('/register', async (req, res) => {
+    try {
+        const { lastname, firstname, email, mobilenumber, username, password, confirmpassword, bio, agree } = req.body;
 
-    const { lastname, firstname, email, mobilenumber, username, password, confirmpassword, bio, agree } = req.body;
+        const newUser = new User({
+            lastname: lastname,
+            firstname: firstname,
+            email: email,
+            mobilenumber: mobilenumber,
+            username: username,
+            password: password,
+            confirmpassword: confirmpassword,
+            bio: bio,
+            agree: agree
+        });
 
-    const newUser = new User({
-        lastname: lastname,
-        firstname: firstname,
-        email: email,
-        mobilenumber: mobilenumber,
-        username: username,
-        password: password,
-        confirmpassword: confirmpassword,
-        bio: bio,
-        agree: agree
-    })
-
-    // if (password !== confirmpassword) {
-    //     return res.render('users/register', {
-    //         user: req.body,
-    //         errorMessage: 'Passwords do not match'
-    //     });
-    // }
-
-    // form validation
-    // use express validator
-    const validateForm = [
-        body('username').isLength({ min: 5 }).withMessage('Username must be at least 3 characters'),
-        body('email').isEmail().withMessage('Invalid email address'),
-        body('password').isLength({ min: 8 }).withMessage('Password must be at least 6 characters'),
-      ];
-      
-    // Check if password and confirmPassword match
-    if (password !== confirmpassword) {
-        return res.status(400).json({ error: 'Password and confirmpassword do not match.' });
-    }
-
-    const errors = validationResult(req);
-
-    if (!errors.isEmpty()) {
-        return res.status(400).json({ errors: errors.array() });
-    }
-
-    newUser.save()
-    .then((newUser) => {
-        res.redirect('/')
-    })
-    .catch((error) => {
+        await newUser.save();
+        res.redirect('/');
+    } catch (error) {
         res.render('/users/register', {
-            user: newUser,
+            user: req.body,
             errorMessage: 'Error creating new user'
-        })
-    })
-})
+        });
+    }
+});
+
 
 
 // get the login page
@@ -92,6 +64,8 @@ router.post('/login', async (req, res) => {
         console.log('Invalid password')
         return res.redirect('./login')
       } else {
+        req.session.username = username
+        console.log(req.session.username)
         return res.redirect('./homepage')
       }
     } catch (error) {
@@ -100,11 +74,33 @@ router.post('/login', async (req, res) => {
     }
 });
 
-// settings page
-router.get('/settings', (req, res) => {
-    res.render('users/settings', {
-        title: 'Settings Page'
-    })
+// get settings page
+router.get('/settings/:id', async (req, res) => {
+    const findUser = await User.findOne({ username: req.session.username })
+    // const = findUser._id
+    try {
+        res.render('users/settings', {
+            title: 'Settings Page',
+            findUser
+        })
+    } catch (error) {
+        console.error('Error fetching user settings:', error)
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+
+// edit settings page
+router.put('/settings/:id', async (req, res) => {
+    const findUser = await User.findOne({ username: req.session.username })
+    try {
+        res.render('users/settings', {
+            title: 'Settings Page',
+            findUser
+        })
+    } catch (error) {
+        console.error('Error fetching user settings:', error)
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
 })
 
 // homepage not logged in
@@ -124,12 +120,14 @@ router.get('/notloggedinhomepage', async (req, res) => {
 // homepage logged in
 router.get('/homepage', async (req, res) => {
     const searchQuery = req.query.search
+    const findUser = await User.findOne({ username: req.session.username })
     try {
         const posts = await Post.find()
         res.render('users/homepage', {
             title: 'Home Page',
             posts: posts,
-            searchQuery
+            searchQuery,
+            findUser
         });
     } catch (error) {
         console.error('Error fetching posts:', error)

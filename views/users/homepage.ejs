@@ -58,8 +58,7 @@
                     </div>
 
                     <div class="buttons flexcolumn autocenter"> 
-                        <!-- <button id="profilebutton" class="aside-button">Profile</button> -->
-                        <button id="settingsbutton" class="aside-button">Settings</button>
+                        <a href="./settings/<%= findUser._id %>" id="settingsbutton" class="aside-button">Settings</a>
                         <button id="logoutbutton" class="aside-button">Logout</button>
                     </div>
                 </aside>
@@ -262,16 +261,6 @@
             
             
             });
-
-            document.addEventListener("DOMContentLoaded", function (){
-
-                const settingsbutton = document.getElementById("settingsbutton");
-                
-                settingsbutton.addEventListener("click", function(){
-                    window.location.href = 'settings';
-                });
-            
-            });
         </script>
 
         <script>
@@ -288,37 +277,6 @@
             //        window.location.href = "editpost"
             //    };
             //}
-        </script>
-
-        <script>
-            // Get all elements with the class name 'delete-post-button'
-            const deleteButtons = document.querySelectorAll('.delete-post-button');
-        
-            // Loop through each delete button and attach event listeners
-            deleteButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    // Get the post ID from the parent element's _id attribute
-                    const postId = this.parentElement.getAttribute('_id');
-                    console.log(postId)
-                    
-                    // Fetch API to send a DELETE request
-                    fetch(`/homepage/${postId}`, {
-                        method: 'DELETE',
-                        // Optionally, you can include headers or body data here
-                    })
-                    .then(response => {
-                        if (response.ok) {
-                            // Redirect to the homepage after successful deletion
-                            window.location.href = 'homepage';
-                        } else {
-                            console.error('Cannot delete the post');
-                        }
-                    })
-                    .catch(error => {
-                        console.error('Error:', error);
-                    });
-                });
-            });
         </script>
         
 
