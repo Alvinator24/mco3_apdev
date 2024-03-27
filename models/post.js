@@ -15,7 +15,15 @@ const postSchema = new mongoose.Schema({
     },
     upvotes: {
         type: Number,
-        default: 5
+        default: 0
+    },
+    author: {
+        type: String,
+        required: true
+    },
+    createdAt: {
+        type: Date,
+        default: Date.now
     }
 })
 

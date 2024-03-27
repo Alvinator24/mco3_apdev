@@ -13,12 +13,13 @@
     <body>
         <div id="header" class="width100 mp0 autocenter greenbg">
             <div id="logodiv" class="mp0 autocenter">
-                <a href="mco_home_registered.html"><img class="width100" id="logo" src="/css/assets/logo4.png"></a>
+                <a href=""><img class="width100" id="logo" src="/css/assets/logo4.png"></a>
 
             </div>
             <div class="searchbarcontainer autocenter">
+                <form id="search-form" class="searchbar mp0 autocenter" action="/users/homepage" name="search" method="GET">
                 <div class="searchbar mp0 autocenter">
-                    <input id="search" type="search" placeholder="Search..."\>
+                    <input id="search" name="search" type="search" placeholder="Search..."\>
                 </div>
                 <div class="searchbuttoncontainer">
                     <button class="searchbutton width100 autocenter" type="submit">
@@ -27,6 +28,7 @@
                         </svg>
                     </button>
                 </div>
+                </form>
             </div>
             <div id="headerbuttons" class="mp0 autocenter">
                 <div id="dropdowndiv">
@@ -56,9 +58,8 @@
                     </div>
 
                     <div class="buttons flexcolumn autocenter"> 
-                        <!-- <button id="profilebutton" class="aside-button">Profile</button> -->
-                        <button id="settingsbutton" class="aside-button">Settings</button>
-                        <button id="logoutbutton" class="aside-button">Logout</button>
+                        <a href="./settings/<%= findUser._id %>" id="settingsbutton" class="aside-button">Settings</a>
+                        <a href="./logout" id="logoutbutton" class="aside-button">Logout</a>
                     </div>
                 </aside>
 
@@ -93,25 +94,27 @@
                             </form>
                         </div>
                     </div>
-                    <% posts.filter(post => post.community === 'Hip Hop').forEach(post => {%>
+                    <% const filteredPosts = searchQuery ? posts.filter(post => post.title.toLowerCase().includes(String(searchQuery).toLowerCase())) : posts;%>
+                    <% filteredPosts.filter(post => post.community === 'Hip Hop').forEach(post => {%>
                         <div id="<%= post._id %>" class="flexrow">
                             <div class="user"><img src="https://tse2.mm.bing.net/th?id=OIP.52L1HoqsjyL47LYaC2CBGwHaKF&pid=Api&P=0&h=180"/></div>
                             <div class="post-box shadow flexcolumn autocenter">
-                                <div class="post-content">
+                                <div class="post-content">     
+                                    <h2><%= post.author %></h2>
                                     <h3 class="title"><%= post.title %></h3>
                                     <p class="post-text"><%= post.body %></p>
-    
                                 </div>
     
                                 <div class="post-interactions flexrow">
                                     <button class="view-post-button" id="view-post">view post</button>
-                                    <button class="edit-post-button" id="edit-post">edit</button>
-                                    <button class="delete-post-button" id="delete-post" onclick="deletePost('<%= post._id %>')">delete</button>
+                                    <a href="./editpost/<%= post._id %>" class="edit-post-button" id="edit-post">edit</a>
+                                    
+                                    
                                     <div class="rating flexrow">
                                         <span id="upvote-count"><%= post.upvotes %></span>
                                         <img src="/css/assets/like.png" class="like" onclick="upvotePost('<%= post._id %>')" />
                                         <img src="/css/assets/dislike.png" class="dislike" onclick="react(this, 'post-1')"/>
-                                        <img src="/css/assets/share.png" class="share"/>
+                                        <!-- <img src="/css/assets/share.png" class="share"/> -->
                                     </div>
                                 </div>
                                     
@@ -184,14 +187,6 @@
                 element.classList.toggle('clicked');
             }
 
-            // function viewPost(postID){
-            // var openPost = encodeURIComponent(postID) + ".html";
-
-            
-            // window.location.href = openPost;
-
-            // }
-
             const viewPostElements = document.getElementsByClassName("view-post-button");
             for (const element of viewPostElements) {
                 element.onclick = () => {
@@ -199,9 +194,6 @@
                 };
             }
         </script>
-
-        <!-- <script type="text/javascript" src="../js/header.js"></script>
-        <script type="text/javascript" src="../js/mco_home_registeredjs.js"></script> -->
 
         <script>
             document.addEventListener("DOMContentLoaded", function() {
@@ -235,17 +227,6 @@
                     }
                 }
             
-                // const profilebutton = document.getElementById("profilebutton");
-                // const settingsbutton = document.getElementById("settingsbutton");
-                
-                
-                // settingsbutton.addEventListener("click", function(){
-                //    window.location.href = 'settings.html';
-                // });
-                // profilebutton.addEventListener("click", function(){
-                //    window.location.href = 'userprofile_rosales.html';
-                // });
-            
                 const html = document.documentElement;
                 const headerbg = document.getElementById("header");
                 const dmodetoggle = document.getElementById("dmodetoggle");
@@ -258,68 +239,7 @@
             
             
             });
-
-            document.addEventListener("DOMContentLoaded", function (){
-
-                const settingsbutton = document.getElementById("settingsbutton");
-                
-                settingsbutton.addEventListener("click", function(){
-                    window.location.href = 'settings';
-                });
-            
-            });
         </script>
-
-        <script>
-            // const logoutbutton = document.getElementById("logout-btn")
-            const editPost = document.getElementsByClassName("edit-post-button")
-            const logout = document.getElementById("logoutbutton")
-
-            logout.addEventListener("click", function(){
-                window.location.href = '/'
-            })
-            
-            for (const element of editPost) {
-                element.onclick = () => {
-                    window.location.href = "editpost"
-                };
-            }
-        </script>
-
-        <script>
-            async function deletePost(postId) {
-                try {
-                    const response = await fetch(`/homepage/${postId}`, {
-                        method: 'DELETE'
-                    });
-        
-                    if (response.ok) {
-                        res.send('Post deleted successfully!');
-                    } else {
-                        const errorMessage = await response.text();
-                        console.error('Failed to delete post:', errorMessage);
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-            }
-        </script>
-
-        <!-- <script>
-          
-            const upvoteCountDiv = document.getElementById('upvote-count');
-            const upvoteButton = document.getElementById('upvote-button');
-        
-            let upvoteCount = 0;
-        
-            function updateUpvoteCount() {
-                upvoteCount++;
-                upvoteCountDiv.textContent = upvoteCount;
-            }
-        
-            upvoteButton.addEventListener('click', updateUpvoteCount);
-        </script>
-         -->
         
     </body>
 </html>

@@ -13,11 +13,11 @@
     <body>
         <div id="header" class="width100 mp0 autocenter greenbg">
             <div id="logodiv" class="mp0 autocenter">
-                <a href="mco_home_registered.html"><img class="width100" id="logo" src="/css/assets/logo4.png"></a>
+                <a href=""><img class="width100" id="logo" src="/css/assets/logo4.png"></a>
 
             </div>
             <div class="searchbarcontainer autocenter">
-                <form id="search-form" action="/users/homepage" name="search" method="GET">
+                <form id="search-form" class="searchbar mp0 autocenter" action="/users/homepage" name="search" method="GET">
                 <div class="searchbar mp0 autocenter">
                     <input id="search" name="search" type="search" placeholder="Search..."\>
                 </div>
@@ -59,7 +59,7 @@
 
                     <div class="buttons flexcolumn autocenter"> 
                         <a href="./settings/<%= findUser._id %>" id="settingsbutton" class="aside-button">Settings</a>
-                        <button id="logoutbutton" class="aside-button">Logout</button>
+                        <a href="./logout" id="logoutbutton" class="aside-button">Logout</a>
                     </div>
                 </aside>
 
@@ -99,14 +99,14 @@
                         <div id="<%= post._id %>" class="flexrow">
                             <div class="user"><img src="https://tse2.mm.bing.net/th?id=OIP.52L1HoqsjyL47LYaC2CBGwHaKF&pid=Api&P=0&h=180"/></div>
                             <div class="post-box shadow flexcolumn autocenter">
-                                <div class="post-content">
+                                <div class="post-content">     
+                                    <h2><%= post.author %></h2>
                                     <h3 class="title"><%= post.title %></h3>
                                     <p class="post-text"><%= post.body %></p>
-
                                 </div>
     
                                 <div class="post-interactions flexrow">
-                                    <button class="view-post-button" id="view-post">view post</button>
+                                    <a href="/users/posts/<%= post._id %>" class="view-post-button" id="view-post">view post</a>
                                     <a href="./editpost/<%= post._id %>" class="edit-post-button" id="edit-post">edit</a>
                                     
                                     
@@ -187,24 +187,13 @@
                 element.classList.toggle('clicked');
             }
 
-            // function viewPost(postID){
-            // var openPost = encodeURIComponent(postID) + ".html";
-
-            
-            // window.location.href = openPost;
-
+            // const viewPostElements = document.getElementsByClassName("view-post-button");
+            // for (const element of viewPostElements) {
+            //    element.onclick = () => {
+            //        window.location.href = "comments";
+            //    };
             // }
-
-            const viewPostElements = document.getElementsByClassName("view-post-button");
-            for (const element of viewPostElements) {
-                element.onclick = () => {
-                    window.location.href = "comments";
-                };
-            }
         </script>
-
-        <!-- <script type="text/javascript" src="../js/header.js"></script>
-        <script type="text/javascript" src="../js/mco_home_registeredjs.js"></script> -->
 
         <script>
             document.addEventListener("DOMContentLoaded", function() {

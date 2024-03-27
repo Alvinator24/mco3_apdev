@@ -9,24 +9,6 @@
     </head>
 
     <body>
-        <!--
-        <header class="header shadow">
-            <div class="header-left">
-                <img class="logo" />
-                <div class="searcharea">
-                <input type="search" class="searchbox" placeholder="search...">
-                <button class="search"></button>
-            </div>
-
-            <div class="header-middle">
-                
-            </div>
-
-            </div>
-            
-            <p class="logout">logout</p>
-        </header>
-        -->
         <div id="header">
             <div id="logodiv">
                 <a href="mco_home_registered.html"><img id="logo" src="/css/assets/logo4.png"></a>
@@ -48,32 +30,18 @@
             </div>
         </div>  
 
-
         <div class="contents">
             <div class="user">
                 <img class="userpfp" src="https://tse2.mm.bing.net/th?id=OIP.52L1HoqsjyL47LYaC2CBGwHaKF&pid=Api&P=0&h=180"/>
-                <div class="username">@m0z4rt_f4n</div>
+                <!-- <div class="username"></div> -->
             </div>
 
             <div class="post-content">
-                <h3 class="title">Unveiling the Timeless Genius of Mozart: A Symphony of Perfection</h3>
-                <p class="post-text">Mozart's timeless compositions continue to enchant listeners with their exquisite melodies and unparalleled craftsmanship. Dive into the symphonies and piano concertos of this legendary composer, whose music speaks to universal emotions of joy, sorrow, and longing, transcending the constraints of time and leaving an enduring legacy for generations to come.</p>
+                 <!-- copy the logic of editpost here -->
+                <h3 class="title"><%= posts.title %></h3>
+                <p class="post-text"><%=  %></p>
             </div>
-
-
             <article>
-
-                <!-- <div class="new-comment-area">
-                    <div class="new-comment">
-                        <img class="userpfp" src="https://64.media.tumblr.com/821f1a7cf8af5ea6ce73271d5965a794/0c806963e6b54cef-4a/s640x960/5d2467aa3b480548fff5c4c58b44903710b548f6.jpg">
-                        <textarea placeholder="Add a comment..."></textarea>
-                    </div>
-    
-                    
-                    <div class="publish-comment" >publish comment</div>    
-
-                </div> -->
-
                 <form id="comment-form" action="/users/comments" method="POST">
                     <div class="new-comment-area">
                         <div class="new-comment">

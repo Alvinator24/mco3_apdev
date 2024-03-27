@@ -17,31 +17,30 @@ router.get('/register', (req, res) => {
 // register new user
 router.post('/register', async (req, res) => {
     try {
-        const { lastname, firstname, email, mobilenumber, username, password, confirmpassword, bio, agree } = req.body;
-
+        const existingUser = await User.findOne({ username: req.body.username });
+        if (existingUser) {
+            res.send('Username is already taken!')
+        }
+        if (req.body.password != req.body.confirmpassword) {
+            res.send('Reconfirm password!')
+        }
         const newUser = new User({
-            lastname: lastname,
-            firstname: firstname,
-            email: email,
-            mobilenumber: mobilenumber,
-            username: username,
-            password: password,
-            confirmpassword: confirmpassword,
-            bio: bio,
-            agree: agree
+            lastname: req.body.lastname,
+            firstname: req.body.firstname,
+            email: req.body.email,
+            mobilenumber: req.body.mobilenumber,
+            username: req.body.username,
+            password: req.body.password,
+            confirmpassword: req.body.confirmpassword,
+            bio: req.body.bio,
+            agree: req.body.agree
         });
-
         await newUser.save();
         res.redirect('/');
     } catch (error) {
-        res.render('/users/register', {
-            user: req.body,
-            errorMessage: 'Error creating new user'
-        });
+        res.render('Error creating new user')
     }
 });
-
-
 
 // get the login page
 router.get('/login', (req, res) => {
@@ -119,10 +118,13 @@ router.get('/notloggedinhomepage', async (req, res) => {
 
 // homepage logged in
 router.get('/homepage', async (req, res) => {
-    const searchQuery = req.query.search
-    const findUser = await User.findOne({ username: req.session.username })
     try {
-        const posts = await Post.find()
+        const searchQuery = req.query.search;
+        const findUser = await User.findOne({ username: req.session.username });
+        if (!findUser || !findUser._id) {
+            return res.redirect('/');
+        }
+        const posts = await Post.find();
         res.render('users/homepage', {
             title: 'Home Page',
             posts: posts,
@@ -130,24 +132,41 @@ router.get('/homepage', async (req, res) => {
             findUser
         });
     } catch (error) {
-        console.error('Error fetching posts:', error)
-        res.status(500).json({ error: 'Internal Server Error' })
+        console.error('Error fetching posts:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
-// get comments
-router.get('/comments', async (req, res) => {
-    try {
-        const comments = await Comment.find()
-        res.render('users/comments', {
-            title: 'Comments', 
-            comments
-        })
-    } catch (error) {
-        console.error('Error fetching comments:', error)
-        res.status(500).json({ error: 'Internal Server Error' })
-    }  
-})
+
+// logout
+router.get('/logout', (req, res) => {
+    req.session.destroy((err) => {
+        res.redirect('/');
+    })
+});
+
+// view posts
+// router.get('/posts/:id', async (req, res) => {
+//     // don't use req.session here, get it from the author
+//     // const findPost = await User.findById(req.params.id)
+//     //const findUser = await User.findOne()
+//     try {
+//         const postId = req.params.id
+//         const post = await Post.findById(postId)
+//         const comments = await Comment.find()
+//         if (!post) {
+//             return res.status(404).send('Post not found')
+//         }
+//         res.render('./comments', {
+//             title: 'View Post',
+//             post,
+//             comments
+//         })
+//     } catch (error) {
+//         console.error('Error fetching post:', error)
+//         res.status(500).json({ error: 'Internal Server Error' })
+//     }
+// })
 
 // publish post
 router.post('/homepage', async (req, res) => {
@@ -156,7 +175,8 @@ router.post('/homepage', async (req, res) => {
         const newPost = new Post({
             title: post_title,
             body: post_body,
-            community
+            community,
+            author: req.session.username
         })
         await newPost.save()
         res.redirect('./homepage')
@@ -175,7 +195,7 @@ router.get('/editpost/:id', async (req, res) => {
         }
         res.render('users/editpost', {
             title: 'Edit Page',
-            post: post,
+            post: post
         })
     } catch (error) {
         console.error('Error fetching post:', error)
@@ -186,22 +206,37 @@ router.get('/editpost/:id', async (req, res) => {
 // put edit post
 router.put('/editpost/:id', async (req, res) => {
     try {
-        await Post.findByIdAndUpdate(req.params.id, {
+        const postId = req.params.id;
+        const post = await Post.findById(postId);
+        if (!post) {
+            return res.status(404).send('Post not found');
+        }
+        if (post.author !== req.session.username) {
+            return res.status(403).send('You are not authorized to edit this post!');
+        }
+        await Post.findByIdAndUpdate(postId, {
             title: req.body.post_title,
             body: req.body.post_body,
-            community: req.body.community
-        })
-        res.redirect('../homepage')
+            community: req.body.community,
+        });
+        res.redirect('../homepage');
     } catch (error) {
-        console.error('Error updating post:', error)
-        res.status(500).json({ error: 'Internal Server Error' })
+        console.error('Error updating post:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 })
 
 // delete a post
 router.delete('/editpost/:id', async (req, res) => {
     try {
-        const postId = req.params.id;
+        const postId = req.params.id
+        const post = await Post.findById(postId)
+        if (!post) {
+            return res.status(404).send('Post not found')
+        }
+        if (post.author !== req.session.username) {
+            return res.status(403).send('You are not authorized to delete this post!')
+        }
         await Post.findByIdAndDelete({_id: postId})
         res.redirect('../homepage')
     } catch (error) {
@@ -224,19 +259,32 @@ router.post('/comments', async (req, res) => {
 })
 
 // upvote a post
-router.put('/homepage', async (req, res) => {
+router.get('/editpost/upvote/:id', async (req, res) => {
     try {
-        const postId = req.params.postId
-        const post = await Post.findById(postId)
-        if (!post) {
-            return res.status(404).send('Post not found')
+        const postId = req.params.id;
+        const updatedPost = await Post.findByIdAndUpdate(postId, { $inc: { upvotes: 1 } }, { new: true });
+        if (!updatedPost) {
+            return res.status(404).send('Post not found');
         }
-        post.upvotes += 1
-        await post.save()
-        // res.send('Post upvoted successfully!');
-        res.redirect('./homepage')
+        res.redirect('/users/homepage');
     } catch (error) {
-        res.status(500).send('Failed to upvote post: ' + error.message);
+        console.error('Error upvoting post:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+});
+
+// downvote a post
+router.get('/editpost/downvote/:id', async (req, res) => {
+    try {
+        const postId = req.params.id;
+        const updatedPost = await Post.findByIdAndUpdate(postId, { $inc: { upvotes: -1 } }, { new: true });
+        if (!updatedPost) {
+            return res.status(404).send('Post not found');
+        }
+        res.redirect('/users/homepage');
+    } catch (error) {
+        console.error('Error downvoting post:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 });
 
@@ -289,11 +337,15 @@ router.get('/hiphop', async (req, res) => {
 
 // jazz
 router.get('/jazz', async (req, res) => {
+    const searchQuery = req.query.search
+    const findUser = await User.findOne({ username: req.session.username })
     try {
         const posts = await Post.find();
         res.render('users/jazz', {
             title: 'Home Page',
-            posts: posts
+            posts: posts,
+            searchQuery,
+            findUser
         })
     } catch (error) {
         console.error('Error fetching posts:', error)

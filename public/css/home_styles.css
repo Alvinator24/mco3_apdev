@@ -158,6 +158,7 @@ h2{
     color: white;
     background-color: var(--brown);
     cursor: pointer;
+    text-align: center;
 }
 
 .aside-button:hover, .view-post-button:hover, .community-dropdown:hover{
@@ -283,7 +284,7 @@ h2{
     border-radius: 25px;
     border:none;
     padding: 5px;
-
+    text-align: center;
 }
 
 
