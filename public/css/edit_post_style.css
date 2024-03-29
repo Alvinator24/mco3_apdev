@@ -56,8 +56,18 @@ textarea{
 
 .username{
     color: var(--green);
+}
 
-    
+.delete-post {
+    margin-left: 550px;
+    position: absolute;
+    bottom: 61px;
+}
+
+#delete-comment {
+    position: absolute;
+    left: 550px;
+    top: 257px;
 }
 
 .reply{

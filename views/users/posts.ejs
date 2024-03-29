@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="stylesheet" href="/css/post_style.css">
+        <link rel="stylesheet" href="/css/comment_header.css">
+        <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+    </head>
+
+    <body>
+        <div id="header">
+            <div id="logodiv">
+                <a href="mco_home_registered.html"><img id="logo" src="/css/assets/logo4.png"></a>
+            </div>
+            <div class="searchbarcontainer">
+                <div class="searchbar">
+                    <input type="search" placeholder="Search..."\>
+                </div>
+                <div class="searchbuttoncontainer">
+                    <button class="searchbutton" type="submit">
+                        <svg class="mg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+            <div id="headerbuttons">
+    
+            </div>
+        </div>  
+
+        <div class="contents">
+            <div class="user">
+                <img class="userpfp" src="https://tse2.mm.bing.net/th?id=OIP.52L1HoqsjyL47LYaC2CBGwHaKF&pid=Api&P=0&h=180"/>
+                <div class="username"><%= post.author %></div>
+            </div>
+            <div class="post-content">
+                <h3 class="title"><%= post.title %></h3>
+                <p class="post-text"><%= post.body %></p>
+            </div>
+            <article>
+                <form id="comment-form" action="/users/posts/<%= post._id %>" method="POST">
+                    <div class="new-comment-area">
+                        <div class="new-comment">
+                            <img class="userpfp" src="https://64.media.tumblr.com/821f1a7cf8af5ea6ce73271d5965a794/0c806963e6b54cef-4a/s640x960/5d2467aa3b480548fff5c4c58b44903710b548f6.jpg">
+                            <textarea name="comment" id="comment" placeholder="Add a comment..."></textarea>
+                        </div>
+                        <input type="submit" class="publish-comment" value="publish">
+                    </div>
+                </form>
+                <ol class="comments">
+                    <% comments.forEach(comment => { %>
+                    <li id="<%= comment._id %>">
+                        <div class="comment-text">
+                            <img class="userpfp" src="https://i.pinimg.com/originals/72/37/69/72376954787f8767d5810a90127fcf8c.jpg"/>
+                            <div class="author">
+                                <p class="comment"><%= comment.author %></p>
+                            </div>
+                            <p class="comment"><%= comment.body %></p>
+                        </div>
+                        <div class="comment-interactions">
+                            <div class="comm-rate">
+                                <img id="like" src="/css/assets/like.png" onclick="react(this, 'comment-1')">
+                                <span id="like-num"> 1K </span>
+                                <img id="dislike" src="/css/assets/dislike.png" onclick="react(this, 'comment-1')">
+                            </div>
+                            <% if (comment.isEdited) { %>
+                                <h2 id="is-edited">Edited</h2>
+                               <% } %>    
+                            <a href="../editcomment/<%= comment._id %>" class="reply"> view </a>
+                        </div>
+                    </li>
+                    <% }) %>
+                </ol>
+                
+            </article>
+        </div>
+        
+    </body>
+</html>

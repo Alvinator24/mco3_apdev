@@ -162,9 +162,18 @@ li{
     border: 1px solid;
 }
 
+#is-edited {
+    margin-right: 50px;
+}
+
 .comment-text{
     display: flex;
     width: 95%;
+    margin: 10px;
+}
+
+.author {
+    margin-right: 10px;
 }
 
 /* Dropdown Button */

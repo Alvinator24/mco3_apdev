@@ -30,94 +30,62 @@
         </div>
     </div> 
     <div id="body">
-        <div id="leftpane">
-            <div id="profile">
-                <div id="dp">
-                    <label for="input-file" id="imagechange">
-                        <img id="dpimg">
-                    </label>
-                    <input type="file" accept="image/jpeg, image/png, image/jpg" id="input-file">
+        <form action="/users/settings/<%= findUser._id %>?_method=PUT" method="POST" enctype="multipart/form-data">
+            <div id="leftpane">
+                <div id="profile">
+                    <div id="dp">
+                        <label for="input-file" id="imagechange">
+                            <img id="dpimg" src="/uploads/<%= findUser.image %>">
+                        </label>
+                        <input name="image" type="file" accept="image/jpeg, image/png, image/jpg" id="input-file">
+                    </div>
                 </div>
-                <div id="profilename">
-                    <p><%= findUser.firstname %> <%= findUser.lastname %></p>
-                </div>
+                <input id="submit-profilepic" type="submit">
             </div>
-            <div id="settings">
-                <!-- <div>
-                    <button type="submit" class="settingsbuttons" id="sb1">Profile</button>
-                </div> -->
-                <!-- <div>
-                    <button type="submit" class="settingsbuttons" id="sb2">Password</button>
-                </div> -->
-                <!-- <div>
-                    <button type="submit" class="settingsbuttons" id="sb3">Appearance</button>
-                </div> -->
-                <div>
-                    <button type="submit" class="settingsbuttons" id="sb4">Save Edits</button>
-                    <button type="submit" class="settingsbuttons" id="sb5">Delete Account</button>
-                </div>
-            </div>
-        </div>
+        </form>
         <div class="rightpane" id="profilerightpane1">
             <table id="profiletable">
-                <tr>
-                    <td><p class="profilesettinglabel">Lastname</p></td>
-                    <td><input class="profileinputs" type="text" placeholder="<%= findUser.lastname  %>"></td>
-                </tr>
-                <tr>
-                    <td><p class="profilesettinglabel">Firstname</p></td>
-                    <td><input class="profileinputs" type="text" placeholder="<%= findUser.firstname %>"></td>
-                </tr>
-                <tr>
-                    <td><p class="profilesettinglabel">Username</p></td>
-                    <td><input class="profileinputs" type="text" placeholder="<%= findUser.username %>"></td>
-                </tr>
-                <tr>
-                    <td><p class="profilesettinglabel">Email</p></td>
-                    <td><input class="profileinputs" type="text" placeholder="<%= findUser.email %>"></td>
-                </tr>
-                <tr>
-                    <td><p class="profilesettinglabel">Mobile Number</p></td>
-                    <td><input class="profileinputs" type="text" placeholder="<%= findUser.mobilenumber %>"></td>
-                </tr>
-                <tr>
-                    <td><p class="profilesettinglabel">Bio</p></td>
-                    <td><input class="profileinputs" type="text" placeholder="<%= findUser.bio %>"></td>
-                </tr>
-                <tr>
-                    <td><p class="profilesettinglabel">Password</p></td>
-                    <td><input class="profileinputs" type="text" placeholder="Enter new password"></td>
-                </tr>
-            </table>
-        </div>
-        <div class="rightpane" id="profilerightpane2">
-            <table id="profiletable">
-                <tr>
-                    <td><p class="pwsettinglabel">Password</p></td>
-                    <td><input class="profileinputs" type="password"></td>
-                </tr>
-                <tr>
-                    <td><p class="pwsettinglabel">Confirm Password</p></td>
-                    <td><input class="profileinputs" type="password"></td>
-                </tr>
-                <tr>
-                    <td><p class="pwsettinglabel">Old Password</p></td>
-                    <td><input class="profileinputs" type="password" ></td>
-                </tr>
-                
-            </table>
-        </div>
-        <div class="rightpane" id="profilerightpane3">
-            <table id="appearancetable">
-                <tr>
-                    <td><p class="pwsettinglabel">Dark Mode</p></td>
-                    <td><input id="dmodetoggle" type="checkbox"></td>
-                </tr>
+                <form action="/users/settings/<%= findUser._id %>?_method=PUT" method="POST">
+                    <tr>
+                        <td><p class="profilesettinglabel">Lastname</p></td>
+                        <td><input style="width: 400px" name="lastname" class="profileinputs" type="text" placeholder="<%= findUser.lastname  %>"></td>
+                    </tr>
+                    <tr>
+                        <td><p class="profilesettinglabel">Firstname</p></td>
+                        <td><input style="width: 400px" name="firstname" class="profileinputs" type="text" placeholder="<%= findUser.firstname %>"></td>
+                    </tr>
+                    <tr>
+                        <td><p class="profilesettinglabel">Username</p></td>
+                        <td><input style="width: 400px" name="username" class="profileinputs" type="text" placeholder="<%= findUser.username %>"></td>
+                    </tr>
+                    <tr>
+                        <td><p class="profilesettinglabel">Email</p></td>
+                        <td><input style="width: 400px" name="email" class="profileinputs" type="text" placeholder="<%= findUser.email %>"></td>
+                    </tr>
+                    <tr>
+                        <td><p class="profilesettinglabel">Mobile Number</p></td>
+                        <td><input style="width: 400px" name="mobilenumber" class="profileinputs" type="text" placeholder="<%= findUser.mobilenumber %>"></td>
+                    </tr>
+                    <tr>
+                        <td><p class="profilesettinglabel">Bio</p></td>
+                        <td><input style="width: 400px" name="bio" class="profileinputs" type="text" placeholder="<%= findUser.bio %>"></td>
+                    </tr>
+                    <tr>
+                        <td><p class="profilesettinglabel">Password</p></td>
+                        <td><input style="width: 400px" name="password" class="profileinputs" type="text" placeholder="Enter new password"></td>
+                    </tr>
+
+                    <div id="save-settings-button">
+                        <button type="submit" class="settingsbuttons" id="sb4">Save Edits</button>
+                    </div>
+                </form>
+                <form action="/users/settings/<%= findUser._id %>?_method=DELETE" method="POST">
+                    <div>
+                        <button class="settingsbutton" id="delete-user" type="submit">Delete User</button>
+                    </div>
+                </form>    
             </table>
         </div>
     </div>
-    <script type="text/javascript" src="../js/settjs.js"></script>
-    <script type="text/javascript" src="../js/header.js"></script>
-
 </body>
 </html>

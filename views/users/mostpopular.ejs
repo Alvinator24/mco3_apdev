@@ -14,6 +14,7 @@
         <div id="header" class="width100 mp0 autocenter greenbg">
             <div id="logodiv" class="mp0 autocenter">
                 <a href=""><img class="width100" id="logo" src="/css/assets/logo4.png"></a>
+
             </div>
             <div class="searchbarcontainer autocenter">
                 <form id="search-form" class="searchbar mp0 autocenter" action="/users/homepage" name="search" method="GET">
@@ -38,7 +39,7 @@
                     <h2 class="section-title">Communities</h2>
                     <div class="topic-list">
                         <a href="homepage" class="comm-name name">All</a>
-                        <a href="mostpopular" class="comm-name name">Sort by Upvotes</a>
+                        <a href="homepage" class="comm-name name">Most Popular</a>
                         <a href="classical" class="comm-name name">Classical</a>
                         <a href="country" class="comm-name name">Country</a>
                         <a href="hiphop" class="comm-name name">Hip Hop</a>
@@ -62,7 +63,9 @@
                                 <h3 class="new-title">Title: <input type="text" name="post_title" id="new-title"></h3>
                                 <p class="post-text"><textarea class="new-post" placeholder="Write a post..." id="new-post" name="post_body"></textarea></p>
                             </div>
+
                             <div class="post-interactions flexrow">
+                                <!-- <button class="view-post-button publish">publish</button> -->
                                 <select class="community-dropdown" id="community-dropdown" name="community">
                                     <option value="default">Choose a community</option>
                                     <option value="Classical">Classical</option>
@@ -96,9 +99,7 @@
                                 <div class="post-interactions flexrow">
                                     <a href="./posts/<%= post._id %>" class="view-post-button" id="view-post">view post</a>
                                     <a href="./editpost/<%= post._id %>" class="edit-post-button" id="edit-post">edit</a>
-                                    <% if (post.isEdited) { %>
-                                        <h2>Edited</h2>
-                                    <% } %>
+                                    
                                     
                                     <div class="rating flexrow">
                                         <span id="upvote-count"><%= post.upvotes %></span>
@@ -151,6 +152,7 @@
                     <img src="https://pyxis.nymag.com/v1/imgs/031/f3a/3dc8d24958c4a3fd3a8487b49a7f71a45f-lofi-girl.1x.rsquare.w1400.png" class="user-story"/>
                     <iframe class="music-story" src="https://open.spotify.com/embed/track/5wIkUsVhYmYjhr9oRsH9jc?utm_source=generator"  frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
                 </div>
+
                 </div>
             </div>
         </div>

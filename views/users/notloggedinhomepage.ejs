@@ -66,7 +66,7 @@
                 </aside>
 
                 <div class="forum flexcolumn">
-                    <% posts.slice(0, 3).forEach(post => {%>
+                    <% posts.slice(0, 5).forEach(post => {%>
                         <div id="<%= post._id %>" class="flexrow">
                             <div class="user"><img src="https://tse2.mm.bing.net/th?id=OIP.52L1HoqsjyL47LYaC2CBGwHaKF&pid=Api&P=0&h=180"/></div>
                             <div class="post-box shadow flexcolumn autocenter">
@@ -77,7 +77,7 @@
                                 </div>
     
                                 <div class="post-interactions flexrow">
-                                    <button class="view-post-button" id="view-post">view post</button>
+                                    <a href="./posts/<%= post._id %>" class="view-post-button" id="view-post">view post</a>
                                     <div class="rating flexrow">
                                         <span id="upvote-count"><%= post.upvotes %></span>
                                         <img src="/css/assets/like.png" class="like" onclick="upvotePost('<%= post._id %>')" />
@@ -89,9 +89,7 @@
                             </div>
                         </div>
                         <% }) %>
-
                 </div>
-
             </div>
             </div>
     
@@ -136,161 +134,6 @@
     
             </div>
         </div>
-
         </div>
-
-        <!-- scripts -->
-        <script>
-            
-            function react(element, containerId) {
-                // Toggle the 'clicked' class to change the color
-                var container = document.getElementById(containerId);
-                var elements = container.querySelectorAll('.rating img');
-                elements.forEach(function(el) {
-                    if (el !== element && el.classList.contains('clicked')) {
-                        el.classList.remove('clicked');
-                    }
-                });
-                
-                element.classList.toggle('clicked');
-            }
-
-            // function viewPost(postID){
-            // var openPost = encodeURIComponent(postID) + ".html";
-
-            
-            // window.location.href = openPost;
-
-            // }
-
-            const viewPostElements = document.getElementsByClassName("view-post-button");
-            for (const element of viewPostElements) {
-                element.onclick = () => {
-                    window.location.href = "comments";
-                };
-            }
-        </script>
-
-        <!-- <script type="text/javascript" src="../js/header.js"></script>
-        <script type="text/javascript" src="../js/mco_home_registeredjs.js"></script> -->
-
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-    
-
-                const header = document.querySelector('#header');
-                document.querySelector(".searchbarcontainer").style.height = getComputedStyle(header).height;
-            
-            
-                const searchButton = document.querySelector(".searchbutton");
-                const searchBar = document.querySelector(".searchbar");
-                const searchBarHeight = getComputedStyle(searchBar).height;
-                searchButton.style.height = searchBarHeight;
-            
-                const dropbutton = document.getElementById("dropdownbutton");
-                const optionsdiv = document.getElementById("optionsdiv");
-                dropbutton.addEventListener("mouseenter", function(){
-                    optionsdiv.classList.toggle("show");
-                });
-            
-                window.onclick = function(event) {
-                    if (!event.target.matches('#dropdownbutton')) {
-                        var dropdowns = document.getElementsByClassName("dropdowncontent");
-                        var i;
-                        for (i = 0; i < dropdowns.length; i++) {
-                            var openDropdown = dropdowns[i];
-                            if (openDropdown.classList.contains('show')) {
-                                openDropdown.classList.remove('show');
-                            }
-                        }
-                    }
-                }
-            
-                // const profilebutton = document.getElementById("profilebutton");
-                // const settingsbutton = document.getElementById("settingsbutton");
-                
-                
-                // settingsbutton.addEventListener("click", function(){
-                //    window.location.href = 'settings.html';
-                // });
-                // profilebutton.addEventListener("click", function(){
-                //    window.location.href = 'userprofile_rosales.html';
-                // });
-            
-                const html = document.documentElement;
-                const headerbg = document.getElementById("header");
-                const dmodetoggle = document.getElementById("dmodetoggle");
-                const body = document.getElementById("body");
-            
-                dmodetoggle.addEventListener("click", function(){
-                    headerbg.classList.toggle("blackbg");
-                    body.classList.toggle("graybg");
-                });
-            
-            
-            });
-
-            document.addEventListener("DOMContentLoaded", function (){
-
-                const settingsbutton = document.getElementById("settingsbutton");
-                
-                settingsbutton.addEventListener("click", function(){
-                    window.location.href = 'settings';
-                });
-            
-            });
-        </script>
-
-        <script>
-            // const logoutbutton = document.getElementById("logout-btn")
-            const editPost = document.getElementsByClassName("edit-post-button")
-            const logout = document.getElementById("logoutbutton")
-
-            logout.addEventListener("click", function(){
-                window.location.href = '/'
-            })
-            
-            for (const element of editPost) {
-                element.onclick = () => {
-                    window.location.href = "editpost"
-                };
-            }
-        </script>
-
-        <script>
-            async function deletePost(postId) {
-                try {
-                    const response = await fetch(`/homepage/${postId}`, {
-                        method: 'DELETE'
-                    });
-        
-                    if (response.ok) {
-                        res.send('Post deleted successfully!');
-                    } else {
-                        const errorMessage = await response.text();
-                        console.error('Failed to delete post:', errorMessage);
-                    }
-                } catch (error) {
-                    console.error('Error:', error);
-                }
-            }
-        </script>
-
-        <!-- <script>
-          
-            const upvoteCountDiv = document.getElementById('upvote-count');
-            const upvoteButton = document.getElementById('upvote-button');
-        
-            let upvoteCount = 0;
-        
-            function updateUpvoteCount() {
-                upvoteCount++;
-                upvoteCountDiv.textContent = upvoteCount;
-            }
-        
-            upvoteButton.addEventListener('click', updateUpvoteCount);
-        </script>
-         -->
-        
     </body>
 </html>

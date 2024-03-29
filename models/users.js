@@ -35,11 +35,18 @@ const userSchema = new mongoose.Schema({
     bio: {
         type: String,
         required: false
-    }
-    // pic: {
-    //     type: String,
-    //     required: true
-    // }
+    },
+    image: {
+        type: String
+    },
+    upvotedPosts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post'
+    }],
+    downvotedPosts: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Post'
+    }]
 })
 
 userSchema.pre('save', async function (next) {
