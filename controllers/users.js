@@ -20,6 +20,13 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage })
 
+// about page
+router.get('/about', (req, res) => {
+    res.render('users/about', {
+        title: 'About Page'
+    })    
+})
+
 // new user (displaying the form)
 router.get('/register', (req, res) => {
     res.render('users/register', {
