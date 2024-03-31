@@ -52,7 +52,7 @@
                 <div class="forum flexcolumn">
                     <% userComments.forEach(comment => {%>
                         <div id="<%= comment._id %>" class="flexrow">
-                            <div class="user"><img src="/uploads/<%= user.image %>"/></div>
+                            <div class="user"><img src="<%= user.image %>"/></div>
                             <div class="post-box shadow flexcolumn autocenter">
                                 <div class="post-content">
                                     <h3 class="title"><%= comment.title %></h3>

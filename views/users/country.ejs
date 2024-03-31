@@ -65,7 +65,7 @@
 
                 <div class="forum flexcolumn">
                     <div id="post-0" class="flexrow">
-                        <div class="user"><img src="/uploads/<%= findUser.image %>"/></div>
+                        <div class="user"><img src="<%= findUser.image %>"/></div>
                         <div class="post-box shadow flexcolumn autocenter">
                             <form id="post-form" action="/users/homepage" method="POST">
                             <div class="create-post flexcolumn"> <!-- deleted autocenter-->
@@ -97,7 +97,7 @@
                     <% const filteredPosts = searchQuery ? posts.filter(post => post.title.toLowerCase().includes(String(searchQuery).toLowerCase())) : posts;%>
                     <% filteredPosts.filter(post => post.community === 'Country').forEach(post => {%>
                         <div id="<%= post._id %>" class="flexrow">
-                            <div class="user"><img src="/uploads/<%= post.image %>"/></div>
+                            <div class="user"><img src="<%= post.image %>"/></div>
                             <div class="post-box shadow flexcolumn autocenter">
                                 <div class="post-content">     
                                     <h2><%= post.author %></h2>

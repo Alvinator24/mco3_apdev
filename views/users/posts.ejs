@@ -11,7 +11,7 @@
     <body>
         <div id="header">
             <div id="logodiv">
-                <a href="mco_home_registered.html"><img id="logo" src="/css/assets/logo4.png"></a>
+                <a href=""><img id="logo" src="/css/assets/logo4.png"></a>
             </div>
             <!-- <div class="searchbarcontainer">
                 <div class="searchbar">
@@ -32,7 +32,7 @@
 
         <div class="contents">
             <div class="user">
-                <img class="userpfp" src="/uploads/<%= post.image %>"/>
+                <img class="userpfp" src="<%= user.image %>"/>
                 <div class="username"><%= post.author %></div>
             </div>
             <div class="post-content">
@@ -46,7 +46,7 @@
                             <% if (!findUser) { %>
                                 <img class="userpfp" src="https://i.pinimg.com/originals/d7/cb/48/d7cb48723d0054d7586cfa927437cf67.jpg">
                             <% } else { %>
-                                <img class="userpfp" src="/uploads/<%= findUser.image %>">
+                                <img class="userpfp" src="<%= findUser.image %>">
                             <% } %>
                             <textarea name="comment" id="comment" placeholder="Add a comment..."></textarea>
                         </div>
@@ -57,7 +57,7 @@
                     <% comments.forEach(comment => { %>
                     <li id="<%= comment._id %>">
                         <div class="comment-text">
-                            <img class="userpfp" src="/uploads/<%= comment.image %>"/>
+                            <img class="userpfp" src="<%= comment.image %>"/>
                             <div class="author">
                                 <p class="comment"><%= comment.author %></p>
                             </div>

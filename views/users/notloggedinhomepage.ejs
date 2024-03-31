@@ -72,12 +72,11 @@
                     <% const filteredPosts = searchQuery ? posts.filter(post => post.title.toLowerCase().includes(String(searchQuery).toLowerCase())) : posts;%>
                     <% filteredPosts.forEach(post => {%>
                         <div id="<%= post._id %>" class="flexrow">
-                            <div class="user"><img src="/uploads/<%= post.image %>"/></div>
+                            <div class="user"><img src="<%= post.image %>"/></div>
                             <div class="post-box shadow flexcolumn autocenter">
                                 <div class="post-content">
                                     <h3 class="title"><%= post.title %></h3>
                                     <p class="post-text"><%= post.body %></p>
-    
                                 </div>
     
                                 <div class="post-interactions flexrow">

@@ -23,7 +23,7 @@
 
 <form class="contents" method="POST" action="/users/editpost/<%= post._id %>?_method=PUT">
     <div class="user">
-        <img class="userpfp" src="/uploads/<%= post.image %>"/>
+        <img class="userpfp" src="<%= user.image %>"/>
         <div class="username"><%= post.author %></div>
     </div>
 

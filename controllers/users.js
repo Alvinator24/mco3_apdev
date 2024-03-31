@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const { check, validationResult } = require('express-validator')
 const multer = require('multer')
-// const cloudinary = require('cloudinary').v2
+const cloudinary = require('cloudinary').v2
 require('dotenv').config()
 
 const User = require('../models/users')
@@ -23,11 +23,11 @@ const storage = multer.diskStorage({
 const upload = multer({ storage })
 
 // connect to cloudinary
-// cloudinary.config({
-//     cloud_name: process.env.CLOUDNAME,
-//     api_key: process.env.APIKEY,
-//     api_secret: process.env.APISECRET
-// })
+cloudinary.config({
+    cloud_name: process.env.CLOUDNAME,
+    api_key: process.env.APIKEY,
+    api_secret: process.env.APISECRET
+})
 
 // about page
 router.get('/about', (req, res) => {
@@ -78,6 +78,7 @@ router.post('/register', upload.single('image'), [
             return res.status(400).json({ errors: errors.array() })
         }
         const existingUser = await User.findOne({ username: req.body.username })
+        const result = await cloudinary.uploader.upload(req.file.path)
         if (existingUser) {
             res.send('Username is already taken!')
         } else if (req.body.password != req.body.confirmpassword) {
@@ -92,7 +93,7 @@ router.post('/register', upload.single('image'), [
                 password: req.body.password,
                 confirmpassword: req.body.confirmpassword,
                 bio: req.body.bio,
-                image: req.file.filename
+                image: result.secure_url
             });
             await newUser.save()
         }
@@ -188,9 +189,8 @@ router.put('/settings/:id', upload.single('image'), async (req, res) => {
             updateFields.password = req.body.password
         }
         if (req.file && req.file.filename) {
-            // const result = await cloudinary.uploader.upload(req.file.path);
-            updateFields.image = req.file.filename
-            updateFields.isDpUpdated = true
+            const result = await cloudinary.uploader.upload(req.file.path)
+            updateFields.image = result.secure_url
         }
         
         await User.findByIdAndUpdate(userId, updateFields)
@@ -225,15 +225,17 @@ router.get('/homepage', async (req, res) => {
     try {
         const searchQuery = req.query.search;
         const findUser = await User.findOne({ username: req.session.username })
+        const posts = await Post.find().sort({ createdAt: -1 })
+        const users = await User.find({ username: { $in: posts.map(post => post.author) } })
         if (!findUser || !findUser._id) {
             return res.redirect('/')
         }
-        const posts = await Post.find().sort({ createdAt: -1 })
         res.render('users/homepage', {
             title: 'Home Page',
             posts,
             searchQuery,
-            findUser
+            findUser,
+            users
         })
     } catch (error) {
         console.error('Error fetching posts:', error)
@@ -276,8 +278,10 @@ router.get('/mostpopular', async (req, res) => {
 // view posts
 router.get('/posts/:id', async (req, res) => {
     const findUser = await User.findOne({ username: req.session.username })
+    const postId = req.params.id;
+    const post = await Post.findById(postId)
+    const user = await User.findOne({ username: post.author })
     try {
-        const postId = req.params.id;
         const post = await Post.findById(postId)
         if (!post) {
             return res.status(404).send('Post not found')
@@ -288,7 +292,8 @@ router.get('/posts/:id', async (req, res) => {
             title: 'View Post',
             post,
             comments: postComments,
-            findUser
+            findUser,
+            user
         })
     } catch (error) {
         console.error('Error fetching post:', error)
@@ -338,6 +343,7 @@ router.get('/editpost/:id', async (req, res) => {
     try {
         const postId = req.params.id
         const post = await Post.findById(postId)
+        const user = await User.findOne({ username: post.author })
         if (!post) {
             return res.status(404).send('Post not found')
         }
@@ -345,7 +351,8 @@ router.get('/editpost/:id', async (req, res) => {
         res.render('users/editpost', {
             title: 'Edit Page',
             post,
-            isEdited
+            isEdited,
+            user
         })
     } catch (error) {
         console.error('Error fetching post:', error)
@@ -358,6 +365,7 @@ router.get('/editcomment/:id', async (req, res) => {
     try {
         const commentId = req.params.id
         const comment = await Comment.findById(commentId)
+        const user = await User.findOne({ username: comment.author })
         if (!comment) {
             return res.status(404).send('Comment not found')
         }
@@ -365,7 +373,8 @@ router.get('/editcomment/:id', async (req, res) => {
         res.render('users/editcomment', {
             title: 'Edit Page',
             comment,
-            isEdited
+            isEdited,
+            user
         })
     } catch (error) {
         console.error('Error fetching comment:', error)
@@ -418,7 +427,7 @@ router.delete('/editcomment/:id', async (req, res) => {
 router.put('/editpost/:id', async (req, res) => {
     try {
         const postId = req.params.id
-        const post = await Post.findById(postId)
+        const post = await Comment.findById(postId)
         if (!post) {
             return res.status(404).send('Post not found')
         }
@@ -508,11 +517,6 @@ router.get('/editpost/downvote/:id', async (req, res) => {
         console.error('Error downvoting post:', error)
         res.status(500).json({ error: 'Internal Server Error' })
     }
-})
-
-// get edit comment
-router.get('/editcomment', async (req, res) => {
-    res.render('users/editcomment')
 })
 
 // classical
