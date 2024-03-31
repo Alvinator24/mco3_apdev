@@ -1,5 +1,5 @@
 To run the project:
 
-1. npm init
-2. npm i bcrypt body-parser ejs express express-ejs-layouts mongoose nodemon
+1. npm init -y
+2. npm i bcrypt connnect-mongodb-session ejs express express-ejs-layouts express-session express-validator method-override mongoose multer nodemon
 3. nodemon app
