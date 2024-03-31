@@ -4,6 +4,8 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const { check, validationResult } = require('express-validator')
 const multer = require('multer')
+const cloudinary = require('cloudinary').v2
+require('dotenv').config()
 
 const User = require('../models/users')
 const Post = require('../models/post')
@@ -19,6 +21,12 @@ const storage = multer.diskStorage({
     }
 })
 const upload = multer({ storage })
+
+// cloudinary.config({
+//     cloud_name: 'your_cloud_name',
+//     api_key: 'your_api_key',
+//     api_secret: 'your_api_secret'
+// })
 
 // about page
 router.get('/about', (req, res) => {
@@ -85,6 +93,7 @@ router.post('/register', upload.single('image'), [
                 image: req.file.filename
             });
             await newUser.save()
+            console.log(req.file.path)
         }
         res.redirect('/');
     } catch (error) {
