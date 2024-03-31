@@ -4,7 +4,7 @@ const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const { check, validationResult } = require('express-validator')
 const multer = require('multer')
-const cloudinary = require('cloudinary').v2
+// const cloudinary = require('cloudinary').v2
 require('dotenv').config()
 
 const User = require('../models/users')
@@ -22,10 +22,11 @@ const storage = multer.diskStorage({
 })
 const upload = multer({ storage })
 
+// connect to cloudinary
 // cloudinary.config({
-//     cloud_name: 'your_cloud_name',
-//     api_key: 'your_api_key',
-//     api_secret: 'your_api_secret'
+//     cloud_name: process.env.CLOUDNAME,
+//     api_key: process.env.APIKEY,
+//     api_secret: process.env.APISECRET
 // })
 
 // about page
@@ -72,6 +73,7 @@ router.post('/register', upload.single('image'), [
 ], async (req, res) => {
     try {
         const errors = validationResult(req)
+        // const result = await cloudinary.uploader.upload(req.file.path)
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() })
         }
@@ -93,7 +95,6 @@ router.post('/register', upload.single('image'), [
                 image: req.file.filename
             });
             await newUser.save()
-            console.log(req.file.path)
         }
         res.redirect('/');
     } catch (error) {
@@ -185,10 +186,14 @@ router.put('/settings/:id', upload.single('image'), async (req, res) => {
             updateFields.password = req.body.password
         }
         if (req.file && req.file.filename) {
+            // const result = await cloudinary.uploader.upload(req.file.path);
             updateFields.image = req.file.filename
+            updateFields.isDpUpdated = true
         }
-
+        
         await User.findByIdAndUpdate(userId, updateFields)
+        await Post.updateMany({ author: req.session.username }, { image: updateFields.image })
+        await Comment.updateMany({ author: req.session.username }, { image: updateFields.image })
 
         res.redirect('../homepage')
     } catch (error) {
@@ -515,7 +520,7 @@ router.get('/classical', async (req, res) => {
     try {
         const posts = await Post.find();
         res.render('users/classical', {
-            title: 'Home Page',
+            title: 'Classical Page',
             posts: posts,
             findUser,
             searchQuery
@@ -533,7 +538,7 @@ router.get('/country', async (req, res) => {
     try {
         const posts = await Post.find();
         res.render('users/country', {
-            title: 'Home Page',
+            title: 'Country Page',
             posts: posts,
             findUser,
             searchQuery
@@ -551,7 +556,7 @@ router.get('/hiphop', async (req, res) => {
     try {
         const posts = await Post.find();
         res.render('users/hiphop', {
-            title: 'Home Page',
+            title: 'Hip Hop Page',
             posts: posts,
             findUser,
             searchQuery
@@ -569,7 +574,7 @@ router.get('/jazz', async (req, res) => {
     try {
         const posts = await Post.find();
         res.render('users/jazz', {
-            title: 'Home Page',
+            title: 'Jazz Page',
             posts: posts,
             searchQuery,
             findUser
@@ -587,7 +592,7 @@ router.get('/pop', async (req, res) => {
     try {
         const posts = await Post.find()
         res.render('users/pop', {
-            title: 'Home Page',
+            title: 'Pop Page',
             posts: posts,
             findUser,
             searchQuery
@@ -605,7 +610,7 @@ router.get('/rock', async (req, res) => {
     try {
         const posts = await Post.find()
         res.render('users/rock', {
-            title: 'Home Page',
+            title: 'Rock Page',
             posts,
             findUser,
             searchQuery

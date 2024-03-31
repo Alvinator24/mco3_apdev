@@ -46,7 +46,10 @@ const userSchema = new mongoose.Schema({
     downvotedPosts: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Post'
-    }]
+    }],
+    isDpUpdated: {
+        type: Boolean
+    }
 })
 
 userSchema.pre('save', async function (next) {

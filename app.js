@@ -3,6 +3,7 @@ const app = express()
 const expressLayouts = require('express-ejs-layouts')
 const methodOverride = require('method-override')
 const session = require('express-session')
+require('dotenv').config()
 
 const indexRouter = require('./controllers/index')
 const userRouter = require('./controllers/users')
@@ -21,8 +22,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride('_method'))
 
 const mongoose = require('mongoose')
-const conn = 'mongodb+srv://vinator:apdev123@cluster0.l7spucv.mongodb.net/apdev'
-mongoose.connect(conn, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.DB_CONN, { useNewUrlParser: true, useUnifiedTopology: true })
 const db = mongoose.connection
 db.on('error', error => console.log(error))
 db.once('open', () => console.log('Connected to MongoDB'))
@@ -34,7 +34,7 @@ app.use(session({
     saveUninitialized: true, 
     resave: false,
     store: new mongoStore({ 
-      uri: conn,
+      uri: process.env.DB_CONN,
       collection: 'sessions',
       expires: 1000*60*60 // 1 hour in seconds
     })
