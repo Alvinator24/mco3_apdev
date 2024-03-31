@@ -151,6 +151,8 @@ router.delete('/settings/:id', async (req, res) => {
     const findUser = await User.findOne({ username: req.session.username })
     try {
         await User.findOneAndDelete(findUser)
+        await Post.updateMany({ author: req.session.username }, { author: 'deleted_user' })
+        await Comment.updateMany({ author: req.session.username }, { author: 'deleted_user' })
         res.redirect('/')
     } catch (error) {
         console.error('Error fetching user settings:', error)
