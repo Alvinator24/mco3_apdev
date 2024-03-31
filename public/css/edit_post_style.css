@@ -14,11 +14,15 @@ html{
     background: url("bg3.png");
     background-repeat: no-repeat;
     background-size: cover;
+    margin: 0;
+    height: 100%;
 }
 
 body{
     margin: 0;
     font-family: 'Comfortaa';
+    height: 100%;
+    background-color: #0C3A2D;
 }
 
 .contents{
@@ -61,13 +65,13 @@ textarea{
 .delete-post {
     margin-left: 550px;
     position: absolute;
-    bottom: 61px;
+    bottom: 80px;
 }
 
 #delete-comment {
     position: absolute;
     left: 550px;
-    top: 257px;
+    top: 239px;
 }
 
 .reply{

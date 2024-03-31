@@ -14,19 +14,20 @@
         <div id="header" class="width100 mp0 autocenter greenbg">
             <div id="logodiv" class="mp0 autocenter">
                 <a href="mco_home_registered.html"><img class="width100" id="logo" src="/css/assets/logo4.png"></a>
-
             </div>
             <div class="searchbarcontainer autocenter">
-                <div class="searchbar mp0 autocenter">
-                    <input id="search" type="search" placeholder="Search..."\>
-                </div>
-                <div class="searchbuttoncontainer">
-                    <button class="searchbutton width100 autocenter" type="submit">
-                        <svg class="mg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                            <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                        </svg>
-                    </button>
-                </div>
+                <form class="searchbar mp0 autocenter" action="/users/notloggedinhomepage" name="search" method="GET">
+                    <div class="searchbar mp0 autocenter">
+                        <input name="search" id="search" type="search" placeholder="Search..."\>
+                    </div>
+                    <div class="searchbuttoncontainer">
+                        <button class="searchbutton width100 autocenter" type="submit">
+                            <svg class="mg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
             </div>
             <div id="headerbuttons" class="mp0 autocenter">
                 <div id="dropdowndiv">
@@ -62,13 +63,15 @@
                         <p class="comm-name name">Jazz</p>
                         <p class="comm-name name">Pop</p>
                         <p class="comm-name name">Rock</p>
+                        <a href="viewusers" class="comm-name name">View Users</a>
                     </div>
                 </aside>
 
                 <div class="forum flexcolumn">
-                    <% posts.slice(0, 5).forEach(post => {%>
+                    <% const filteredPosts = searchQuery ? posts.filter(post => post.title.toLowerCase().includes(String(searchQuery).toLowerCase())) : posts;%>
+                    <% filteredPosts.forEach(post => {%>
                         <div id="<%= post._id %>" class="flexrow">
-                            <div class="user"><img src="https://tse2.mm.bing.net/th?id=OIP.52L1HoqsjyL47LYaC2CBGwHaKF&pid=Api&P=0&h=180"/></div>
+                            <div class="user"><img src="/uploads/<%= post.image %>"/></div>
                             <div class="post-box shadow flexcolumn autocenter">
                                 <div class="post-content">
                                     <h3 class="title"><%= post.title %></h3>
@@ -82,7 +85,6 @@
                                         <span id="upvote-count"><%= post.upvotes %></span>
                                         <img src="/css/assets/like.png" class="like" onclick="upvotePost('<%= post._id %>')" />
                                         <img src="/css/assets/dislike.png" class="dislike" onclick="react(this, 'post-1')"/>
-                                        <img src="/css/assets/share.png" class="share"/>
                                     </div>
                                 </div>
                                     

@@ -1,6 +1,6 @@
 const mongoose = require('mongoose')
-const bcrypt = require('bcrypt');
-const saltRounds = 10;
+const bcrypt = require('bcrypt')
+const saltRounds = 10
 
 const userSchema = new mongoose.Schema({
     lastname: {

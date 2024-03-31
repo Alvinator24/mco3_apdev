@@ -4,6 +4,10 @@
     --green: #0C3A2D;
 }
 
+body {
+    background-color: var(--green);
+}
+
 form{
     height: 100%-50px;
     margin: 50px 80px;
@@ -20,6 +24,11 @@ form > div{
     border-radius: 25px;
     height: 100%;
     width: 100%;
+}
+
+#upload-dp {
+    margin-top: 20px;
+    margin-bottom: -10px;
 }
 
 .basic-info, .user-bio{ 

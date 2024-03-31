@@ -28,7 +28,7 @@ router.get('/register', (req, res) => {
 })
 
 // register new user
-router.post('/register', [
+router.post('/register', upload.single('image'), [
     check('username')
         .notEmpty()
         .withMessage('Username cannot be empty')
@@ -60,7 +60,7 @@ router.post('/register', [
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() })
         }
-        const existingUser = await User.findOne({ username: req.body.username });
+        const existingUser = await User.findOne({ username: req.body.username })
         if (existingUser) {
             res.send('Username is already taken!')
         } else if (req.body.password != req.body.confirmpassword) {
@@ -75,15 +75,15 @@ router.post('/register', [
                 password: req.body.password,
                 confirmpassword: req.body.confirmpassword,
                 bio: req.body.bio,
-                agree: req.body.agree
+                image: req.file.filename
             });
-            await newUser.save();
+            await newUser.save()
         }
         res.redirect('/');
     } catch (error) {
-        res.render('Error creating new user')
+        res.send('Error creating new user' + error)
     }
-});
+})
 
 // get the login page
 router.get('/login', (req, res) => {
@@ -111,9 +111,9 @@ router.post('/login', async (req, res) => {
       }
     } catch (error) {
       console.error(error)
-      res.status(500).json({ message: 'Internal server error' });
+      res.status(500).json({ message: 'Internal server error' })
     }
-});
+})
 
 // get settings page
 router.get('/settings/:id', async (req, res) => {
@@ -125,7 +125,7 @@ router.get('/settings/:id', async (req, res) => {
         })
     } catch (error) {
         console.error('Error fetching user settings:', error)
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: 'Internal Server Error' })
     }
 })
 
@@ -137,165 +137,171 @@ router.delete('/settings/:id', async (req, res) => {
         res.redirect('/')
     } catch (error) {
         console.error('Error fetching user settings:', error)
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: 'Internal Server Error' })
     }
 })
 
 // edit settings page
 router.put('/settings/:id', upload.single('image'), async (req, res) => {
     try {
-        const userId = req.params.id;
-        const updateFields = {};
+        const userId = req.params.id
+        const updateFields = {}
 
         if (req.body.lastname) {
-            updateFields.lastname = req.body.lastname;
+            updateFields.lastname = req.body.lastname
         }
         if (req.body.firstname) {
-            updateFields.firstname = req.body.firstname;
+            updateFields.firstname = req.body.firstname
         }
         if (req.body.username) {
-            updateFields.username = req.body.username;
+            updateFields.username = req.body.username
         }
         if (req.body.email) {
-            updateFields.email = req.body.email;
+            updateFields.email = req.body.email
         }
         if (req.body.mobilenumber) {
-            updateFields.mobilenumber = req.body.mobilenumber;
+            updateFields.mobilenumber = req.body.mobilenumber
         }
         if (req.body.bio) {
-            updateFields.bio = req.body.bio;
+            updateFields.bio = req.body.bio
         }
         if (req.body.password) {
-            updateFields.password = req.body.password;
+            updateFields.password = req.body.password
         }
         if (req.file && req.file.filename) {
-            updateFields.image = req.file.filename;
+            updateFields.image = req.file.filename
         }
 
-        await User.findByIdAndUpdate(userId, updateFields);
+        await User.findByIdAndUpdate(userId, updateFields)
 
-        res.redirect('../homepage');
+        res.redirect('../homepage')
     } catch (error) {
         console.error('Error updating user:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: 'Internal Server Error' })
     }
-});
+})
 
 // homepage not logged in
 router.get('/notloggedinhomepage', async (req, res) => {
+    const searchQuery = req.query.search
     try {
-        const posts = await Post.find();
+        const posts = await Post.find()
         res.render('users/notloggedinhomepage', {
             title: 'Home Page',
-            posts
+            posts,
+            searchQuery
         })
     } catch (error) {
         console.error('Error fetching posts:', error)
-        res.status(500).json({ error: 'Internal Server Error' });
+        res.status(500).json({ error: 'Internal Server Error' })
     }
-});
+})
 
 // homepage logged in
 router.get('/homepage', async (req, res) => {
     try {
         const searchQuery = req.query.search;
-        const findUser = await User.findOne({ username: req.session.username });
+        const findUser = await User.findOne({ username: req.session.username })
         if (!findUser || !findUser._id) {
-            return res.redirect('/');
+            return res.redirect('/')
         }
-        const posts = await Post.find().sort({ createdAt: -1 });
+        const posts = await Post.find().sort({ createdAt: -1 })
         res.render('users/homepage', {
             title: 'Home Page',
             posts,
             searchQuery,
             findUser
-        });
+        })
     } catch (error) {
-        console.error('Error fetching posts:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error fetching posts:', error)
+        res.status(500).json({ error: 'Internal Server Error' })
     }
-});
+})
 
 // logout
 router.get('/logout', (req, res) => {
-    req.session.destroy((err) => {
-        res.redirect('/');
+    req.session.destroy(() => {
+        res.redirect('/')
     })
-});
+})
 
 router.get('/mostpopular', async (req, res) => {
     try {
         const searchQuery = req.query.search;
-        const findUser = await User.findOne({ username: req.session.username });
+        const findUser = await User.findOne({ username: req.session.username })
         if (!findUser || !findUser._id) {
-            return res.redirect('/');
+            return res.redirect('/')
         }
         let posts;
         if (searchQuery) {
-            posts = await Post.find({ title: { $regex: searchQuery, $options: 'i' } }).sort({ upvotes: -1 });
+            posts = await Post.find({ title: { $regex: searchQuery, $options: 'i' } }).sort({ upvotes: -1 })
         } else {
-            posts = await Post.find().sort({ upvotes: -1 });
+            posts = await Post.find().sort({ upvotes: -1 })
         }
         res.render('users/homepage', {
             title: 'Home Page',
             posts: posts,
             searchQuery,
             findUser
-        });
+        })
     } catch (error) {
-        console.error('Error fetching posts:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error fetching posts:', error)
+        res.status(500).json({ error: 'Internal Server Error' })
     }
 })
 
 // view posts
 router.get('/posts/:id', async (req, res) => {
+    const findUser = await User.findOne({ username: req.session.username })
     try {
         const postId = req.params.id;
-        const post = await Post.findById(postId);
+        const post = await Post.findById(postId)
         if (!post) {
-            return res.status(404).send('Post not found');
+            return res.status(404).send('Post not found')
         }
-        const comments = await Comment.find().sort({ createdAt: -1 });
-        const postComments = comments.filter(comment => String(comment.post) === postId);
+        const comments = await Comment.find().sort({ createdAt: -1 })
+        const postComments = comments.filter(comment => String(comment.post) === postId)
         res.render('users/posts', {
             title: 'View Post',
             post,
-            comments: postComments
-        });
+            comments: postComments,
+            findUser
+        })
     } catch (error) {
-        console.error('Error fetching post:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error fetching post:', error)
+        res.status(500).json({ error: 'Internal Server Error' })
     }
 })
 
 // post comment
 router.post('/posts/:id', async (req, res) => {
+    const findUser = await User.findOne({ username: req.session.username })
     try {
-        const postId = req.params.id;
-        const { comment } = req.body;
-        // Create a new comment and associate it with the post
+        const postId = req.params.id
         const newComment = new Comment({
-            body: comment,
+            body: req.body.comment,
             post: postId,
-            author: req.session.username
-        });
-        await newComment.save();
-        res.redirect('../homepage');
+            author: req.session.username,
+            image: findUser.image
+        })
+        await newComment.save()
+        res.redirect('../homepage')
     } catch (error) {
-        res.status(500).send('New comment not published: ' + error.message);
+        res.status(500).send('New comment not published: ' + error.message)
     }
 })
 
 // publish post
 router.post('/homepage', async (req, res) => {
+    const findUser = await User.findOne({ username: req.session.username })
     try {
         const { post_title, post_body, community } = req.body
         const newPost = new Post({
             title: post_title,
             body: post_body,
             community,
-            author: req.session.username
+            author: req.session.username,
+            image: findUser.image
         })
         await newPost.save()
         res.redirect('./homepage')
@@ -353,13 +359,13 @@ router.put('/editcomment/:id', async (req, res) => {
             return res.status(404).send('Comment not found')
         }
         if (comment.author !== req.session.username) {
-            return res.status(403).send('You are not authorized to edit this comment!');
+            return res.status(403).send('You are not authorized to edit this comment!')
         }
         await Comment.findByIdAndUpdate(commentId, {
             body: req.body.comment_body,
             isEdited: true
         });
-        res.redirect('../homepage');
+        res.redirect('../homepage')
     } catch (error) {
         console.error('Error fetching comment:', error)
         res.status(500).json({ error: 'Internal Server Error' })
@@ -375,10 +381,10 @@ router.delete('/editcomment/:id', async (req, res) => {
             return res.status(404).send('Comment not found')
         }
         if (comment.author !== req.session.username) {
-            return res.status(403).send('You are not authorized to delete this comment!');
+            return res.status(403).send('You are not authorized to delete this comment!')
         }
-        await Comment.findByIdAndDelete(commentId);
-        res.redirect('../homepage');
+        await Comment.findByIdAndDelete(commentId)
+        res.redirect('../homepage')
     } catch (error) {
         console.error('Error fetching comment:', error)
         res.status(500).json({ error: 'Internal Server Error' })
@@ -388,24 +394,24 @@ router.delete('/editcomment/:id', async (req, res) => {
 // put edit post
 router.put('/editpost/:id', async (req, res) => {
     try {
-        const postId = req.params.id;
-        const post = await Post.findById(postId);
+        const postId = req.params.id
+        const post = await Post.findById(postId)
         if (!post) {
-            return res.status(404).send('Post not found');
+            return res.status(404).send('Post not found')
         }
         if (post.author !== req.session.username) {
-            return res.status(403).send('You are not authorized to edit this post!');
+            return res.status(403).send('You are not authorized to edit this post!')
         }
         await Post.findByIdAndUpdate(postId, {
             title: req.body.post_title,
             body: req.body.post_body,
             community: req.body.community,
             isEdited: true
-        });
-        res.redirect('../homepage');
+        })
+        res.redirect('../homepage')
     } catch (error) {
-        console.error('Error updating post:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error updating post:', error)
+        res.status(500).json({ error: 'Internal Server Error' })
     }
 })
 
@@ -425,47 +431,47 @@ router.delete('/editpost/:id', async (req, res) => {
     } catch (error) {
         res.status(500).send('Failed to delete post: ' + error.message)
     }
-});
+})
 
 // upvote a post
 router.get('/editpost/upvote/:id', async (req, res) => {
     try {
-        const postId = req.params.id;
+        const postId = req.params.id
         const username = req.session.username
         const user = await User.findOne({ username })
         if (!postId) {
-            return res.status(404).send('Post not found');
+            return res.status(404).send('Post not found')
         }
-        const postIdObject = new mongoose.Types.ObjectId(postId);
+        const postIdObject = new mongoose.Types.ObjectId(postId)
         if (user.upvotedPosts.includes(postIdObject)) {
-            return res.status(400).send('You have already upvoted this post!');
+            return res.status(400).send('You have already upvoted this post!')
         } else {
-            await Post.findByIdAndUpdate(postId, { $inc: { upvotes: 1 } }, { new: true });
+            await Post.findByIdAndUpdate(postId, { $inc: { upvotes: 1 } }, { new: true })
             await User.findOneAndUpdate(
                 { username },
                 { $push: { upvotedPosts: postIdObject } },
                 { new: true }
             )
         }
-        res.redirect('/users/homepage');
+        res.redirect('/users/homepage')
     } catch (error) {
-        console.error('Error upvoting post:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error upvoting post:', error)
+        res.status(500).json({ error: 'Internal Server Error' })
     }
-});
+})
 
 // downvote a post
 router.get('/editpost/downvote/:id', async (req, res) => {
     try {
-        const postId = req.params.id;
+        const postId = req.params.id
         const username = req.session.username
         const user = await User.findOne({ username })
         if (!postId) {
-            return res.status(404).send('Post not found');
+            return res.status(404).send('Post not found')
         }
-        const postIdObject = new mongoose.Types.ObjectId(postId);
+        const postIdObject = new mongoose.Types.ObjectId(postId)
         if (user.downvotedPosts.includes(postIdObject)) {
-            return res.status(400).send('You have already downvoted this post!');
+            return res.status(400).send('You have already downvoted this post!')
         } else {
             await Post.findByIdAndUpdate(postId, { $inc: { upvotes: -1 } }, { new: true })
             await User.findOneAndUpdate(
@@ -474,12 +480,12 @@ router.get('/editpost/downvote/:id', async (req, res) => {
                 { new: true }
             )
         }
-        res.redirect('/users/homepage');
+        res.redirect('/users/homepage')
     } catch (error) {
-        console.error('Error downvoting post:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        console.error('Error downvoting post:', error)
+        res.status(500).json({ error: 'Internal Server Error' })
     }
-});
+})
 
 // get edit comment
 router.get('/editcomment', async (req, res) => {
@@ -488,11 +494,15 @@ router.get('/editcomment', async (req, res) => {
 
 // classical
 router.get('/classical', async (req, res) => {
+    const findUser = await User.findOne({ username: req.session.username })
+    const searchQuery = req.query.search
     try {
         const posts = await Post.find();
         res.render('users/classical', {
             title: 'Home Page',
-            posts: posts
+            posts: posts,
+            findUser,
+            searchQuery
         })
     } catch (error) {
         console.error('Error fetching posts:', error)
@@ -502,11 +512,15 @@ router.get('/classical', async (req, res) => {
 
 // country
 router.get('/country', async (req, res) => {
+    const findUser = await User.findOne({ username: req.session.username })
+    const searchQuery = req.query.search
     try {
         const posts = await Post.find();
         res.render('users/country', {
             title: 'Home Page',
-            posts: posts
+            posts: posts,
+            findUser,
+            searchQuery
         })
     } catch (error) {
         console.error('Error fetching posts:', error)
@@ -516,11 +530,15 @@ router.get('/country', async (req, res) => {
 
 // hip hop
 router.get('/hiphop', async (req, res) => {
+    const findUser = await User.findOne({ username: req.session.username })
+    const searchQuery = req.query.search
     try {
         const posts = await Post.find();
         res.render('users/hiphop', {
             title: 'Home Page',
-            posts: posts
+            posts: posts,
+            findUser,
+            searchQuery
         })
     } catch (error) {
         console.error('Error fetching posts:', error)
@@ -548,11 +566,15 @@ router.get('/jazz', async (req, res) => {
 
 // pop
 router.get('/pop', async (req, res) => {
+    const findUser = await User.findOne({ username: req.session.username })
+    const searchQuery = req.query.search
     try {
-        const posts = await Post.find();
+        const posts = await Post.find()
         res.render('users/pop', {
             title: 'Home Page',
-            posts: posts
+            posts: posts,
+            findUser,
+            searchQuery
         })
     } catch (error) {
         console.error('Error fetching posts:', error)
@@ -562,15 +584,65 @@ router.get('/pop', async (req, res) => {
 
 // rock
 router.get('/rock', async (req, res) => {
+    const findUser = await User.findOne({ username: req.session.username })
+    const searchQuery = req.query.search
     try {
-        const posts = await Post.find();
+        const posts = await Post.find()
         res.render('users/rock', {
             title: 'Home Page',
-            posts: posts
+            posts,
+            findUser,
+            searchQuery
         })
     } catch (error) {
         console.error('Error fetching posts:', error)
         res.status(500).json({ error: 'Internal Server Error' })
+    }
+})
+
+// view users (not logged in)
+router.get('/viewusers', async (req, res) => {
+    try {
+        const users = await User.find()
+        res.render('users/viewusers', {
+            title: 'View Users',
+            users
+        })
+    } catch (error) {
+        console.error('Error fetching users:', error)
+        res.status(500).json({ error: 'Internal Server Error' })
+    }
+})
+
+// view users posts (not logged in)
+router.get('/userposts/:id', async (req, res) => {
+    try {
+        const user = await User.findOne({_id: req.params.id})
+        const userPosts = await Post.find({ author: user.username });
+        res.render('users/userposts', {
+            title: 'User Posts',
+            userPosts,
+            user
+        });
+    } catch (error) {
+        console.error('Error fetching user posts:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
+    }
+})
+
+// view users comments (not logged in)
+router.get('/usercomments/:id', async (req, res) => {
+    try {
+        const user = await User.findOne({_id: req.params.id})
+        const userComments = await Comment.find({ author: user.username });
+        res.render('users/usercomments', {
+            title: 'User Comments',
+            userComments,
+            user
+        });
+    } catch (error) {
+        console.error('Error fetching user posts:', error);
+        res.status(500).json({ error: 'Internal Server Error' });
     }
 })
 

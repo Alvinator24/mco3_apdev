@@ -23,7 +23,7 @@
 
         <form action="/users/editcomment/<%= comment._id %>?_method=PUT" class="contents" method="POST">
             <div class="user">
-                <img class="userpfp" src="https://tse2.mm.bing.net/th?id=OIP.52L1HoqsjyL47LYaC2CBGwHaKF&pid=Api&P=0&h=180"/>
+                <img class="userpfp" src="/uploads/<%= comment.image %>"/>
                 <div class="username"><%= comment.author %></div>
             </div>
 

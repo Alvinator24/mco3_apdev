@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title><%= title %></title>
+        <link rel="icon" type="image/x-icon" href="../../assets/icon.ico">
+        <link rel="stylesheet" href="/css/home_styles.css">
+        <link rel="stylesheet" href="/css/header.css">
+        <link rel="stylesheet" href="/css/notebook_styles.css">
+        <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+    </head>
+
+    <body>
+        <div id="header" class="width100 mp0 autocenter greenbg">
+            <div id="logodiv" class="mp0 autocenter">
+                <a href=""><img class="width100" id="logo" src="/css/assets/logo4.png"></a>
+            </div>
+            <div class="searchbarcontainer autocenter">
+                <form id="userposts-searchbar" class="searchbar mp0 autocenter" action="/users/userposts" method="GET">
+                    <div class="searchbar mp0 autocenter">
+                        <input name="search" id="search" type="search" placeholder="Search..."\>
+                    </div>
+                    <div class="searchbuttoncontainer">
+                        <button class="searchbutton width100 autocenter" type="submit">
+                            <svg class="mg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+                                <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
+                            </svg>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>  
+
+
+        <div class="contents">
+            <div class="main-bg">
+            <div class="main">
+                <aside class="topics autocenter flexcolumn shadow">
+                    <h2 class="section-title">Communities</h2>
+                    <div class="topic-list">
+                        <p class="comm-name name">All</p>
+                        <p class="comm-name name">Classical</p>
+                        <p class="comm-name name">Country</p>
+                        <p class="comm-name name">Hip Hop</p>
+                        <p class="comm-name name">Jazz</p>
+                        <p class="comm-name name">Pop</p>
+                        <p class="comm-name name">Rock</p>
+                        <a href="viewusers" class="comm-name name">View Users</a>
+                    </div>
+                </aside>
+
+                <div class="forum flexcolumn">
+                    <% userComments.forEach(comment => {%>
+                        <div id="<%= comment._id %>" class="flexrow">
+                            <div class="user"><img src="/uploads/<%= user.image %>"/></div>
+                            <div class="post-box shadow flexcolumn autocenter">
+                                <div class="post-content">
+                                    <h3 class="title"><%= comment.title %></h3>
+                                    <p class="post-text"><%= comment.body %></p>
+                                </div>
+                                <div class="post-interactions flexrow">
+                                    <a href="" class="view-post-button" id="view-post">view comment</a>
+                                    <div class="rating flexrow">
+                                        <span id="upvote-count"><%= comment.upvotes %></span>
+                                        <img src="/css/assets/like.png" class="like" onclick="upvotePost('<%= comment._id %>')" />
+                                        <img src="/css/assets/dislike.png" class="dislike" onclick="react(this, 'post-1')"/>
+                                    </div>
+                                </div>    
+                            </div>
+                        </div>
+                        <% }) %>
+                </div>
+            </div>
+            </div>
+    
+            <div class="stories-bg">
+            <div class="stories">
+                <div class="story">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcREDoSNa-bR2mY_CTu1uxBpsCJ5_StKSsKqdQ&usqp=CAU" class="user-story"/>
+                    <iframe class="music-story" src="https://open.spotify.com/embed/track/0EcQcdcbQeVJn9fknj44Be?utm_source=generator"  frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+
+                <div class="story">
+                    <img src="https://i.pinimg.com/736x/15/c1/ec/15c1ec0f3beb08c3587d65462fd0fc7a.jpg" class="user-story"/>
+                    <iframe class="music-story" src="https://open.spotify.com/embed/track/1RIqzlphRm2btQO0LgHWsN?utm_source=generator" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+
+                <div class="story">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmHAdijohip_-GtG6oN0Owhd6Mxqw1mp_ywg&usqp=CAU" class="user-story"/>
+                    <iframe class="music-story" style="border-radius:12px" src="https://open.spotify.com/embed/track/0ug5NqcwcFR2xrfTkc7k8e?utm_source=generator"  frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+                
+                <div class="story">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQXgW0cV-0Le-etmNh9MEWU5Hdr-h-96YP_1w&usqp=CAU" class="user-story"/>
+                    <iframe class="music-story" src="https://open.spotify.com/embed/track/22PMfvdz35fFKYnJyMn077?utm_source=generator"  frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+
+                <div class="story">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT0n253bhwP1wy_wAP5NsvCJ0dWHoPhR4GCEWrVVFHWG4qnHhitihxxb8qvJ2DKbC2F08c&usqp=CAU" class="user-story"/>
+                    <iframe class="music-story" src="https://open.spotify.com/embed/track/0CBDY0SfSIaVWnOFrwzSbv?utm_source=generator" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+                
+                <div class="story">
+                    <img src="https://i.pinimg.com/564x/db/e0/22/dbe0222d870ef800cae5ceae65a94059.jpg" class="user-story"/>
+                    <iframe class="music-story" src="https://open.spotify.com/embed/track/6q3zC9dDD4lUNk8nfUztXy?utm_source=generator"  frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+
+                <div class="story">
+                    <img src="https://pyxis.nymag.com/v1/imgs/031/f3a/3dc8d24958c4a3fd3a8487b49a7f71a45f-lofi-girl.1x.rsquare.w1400.png" class="user-story"/>
+                    <iframe class="music-story" src="https://open.spotify.com/embed/track/5wIkUsVhYmYjhr9oRsH9jc?utm_source=generator"  frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
+                </div>
+
+                </div>
+    
+            </div>
+        </div>
+        </div>
+    </body>
+</html>

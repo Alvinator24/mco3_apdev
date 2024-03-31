@@ -8,7 +8,7 @@ const indexRouter = require('./controllers/index')
 const userRouter = require('./controllers/users')
 
 app.use(express.static('public'))
-app.use('/uploads', express.static('uploads'));
+app.use('/uploads', express.static('uploads'))
 
 app.set('view engine', 'ejs')
 app.set('views', __dirname + '/views')
@@ -27,7 +27,7 @@ const db = mongoose.connection
 db.on('error', error => console.log(error))
 db.once('open', () => console.log('Connected to MongoDB'))
 
-const mongoStore = require('connect-mongodb-session')(session);
+const mongoStore = require('connect-mongodb-session')(session)
 
 app.use(session({
     secret: 'secret key',

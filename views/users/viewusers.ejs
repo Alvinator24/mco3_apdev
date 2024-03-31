@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<head>
+    <title><%= title %></title>
+    <link rel="icon" type="image/x-icon" href="icon.ico">
+    <link rel="stylesheet" href="/css/settstyles.css">
+    <link rel="stylesheet" href="/css/header.css">
+    <link href='https://fonts.googleapis.com/css?family=Chivo' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Cutive Mono' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Source Code Pro' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css?family=Comfortaa' rel='stylesheet'>
+</head>
+<body style="background-color: #0C3A2D;">
+    <div id="header" class="width100 mp0 autocenter greenbg">
+        <div id="logodiv" class="mp0 autocenter">
+            <a href=""><img class="width100" id="logo" src="/css/assets/logo4.png"></a>
+        </div>
+        <div class="searchbarcontainer autocenter">
+        </div>
+        <div id="headerbuttons" class="mp0">
+        </div>
+    </div>
+    <% users.forEach(user => { %>
+    <div id="body">
+        <div id="leftpane">
+            <div id="profile">
+                <div id="dp">
+                    <label for="input-file" id="imagechange">
+                        <img style="margin-right: 200px;" id="dpimg" src="/uploads/<%= user.image %>">
+                    </label>
+                </div>
+            </div>
+        </div>
+        <div class="rightpane" id="profilerightpane1">
+            <table id="profiletable">
+                    <tr>
+                        <td><p class="profilesettinglabel">Lastname</p></td>
+                        <td><input style="width: 400px" name="lastname" class="profileinputs" type="text" placeholder="<%= user.lastname  %>"></td>
+                    </tr>
+                    <tr>
+                        <td><p class="profilesettinglabel">Firstname</p></td>
+                        <td><input style="width: 400px" name="firstname" class="profileinputs" type="text" placeholder="<%= user.firstname %>"></td>
+                    </tr>
+                    <tr>
+                        <td><p class="profilesettinglabel">Username</p></td>
+                        <td><input style="width: 400px" name="username" class="profileinputs" type="text" placeholder="<%= user.username %>"></td>
+                    </tr>
+                    <tr>
+                        <td><p class="profilesettinglabel">Email</p></td>
+                        <td><input style="width: 400px" name="email" class="profileinputs" type="text" placeholder="<%= user.email %>"></td>
+                    </tr>
+                    <tr>
+                        <td><p class="profilesettinglabel">Mobile Number</p></td>
+                        <td><input style="width: 400px" name="mobilenumber" class="profileinputs" type="text" placeholder="<%= user.mobilenumber %>"></td>
+                    </tr>
+                    <tr>
+                        <td><p class="profilesettinglabel">Bio</p></td>
+                        <td><input style="width: 400px" name="bio" class="profileinputs" type="text" placeholder="<%= user.bio %>"></td>
+                    </tr>
+            </table>
+            <div class="view-post-comment" style="display: inline-block; margin-right: 10px;">
+                <a class="settingsbuttons" href="userposts/<%= user.id %>">View Posts</a>
+                <a class="settingsbuttons" href="usercomments/<%= user.id %>">View Comments</a>
+            </div>
+        </div>
+    </div>
+    <% }) %> 
+</body>
+</html>

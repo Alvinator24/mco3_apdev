@@ -32,6 +32,9 @@ const postSchema = new mongoose.Schema({
     isEdited: {
         type: Boolean,
         default: false
+    },
+    image: {
+        type: String
     }
 })
 

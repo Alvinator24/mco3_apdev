@@ -15,15 +15,7 @@
             <a href=""><img class="width100" id="logo" src="/css/assets/logo4.png"></a>
         </div>
         <div class="searchbarcontainer autocenter">
-            <div class="searchbar mp0 autocenter">
-                <input id="search" type="search" placeholder="Search..."\>
-            </div>
             <div class="searchbuttoncontainer">
-                <button class="searchbutton width100 autocenter" type="submit">
-                    <svg class="mg" xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
-                        <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0"/>
-                    </svg>
-                </button>
             </div>
         </div>
         <div id="headerbuttons" class="mp0">
@@ -40,7 +32,7 @@
                         <input name="image" type="file" accept="image/jpeg, image/png, image/jpg" id="input-file">
                     </div>
                 </div>
-                <input id="submit-profilepic" type="submit">
+                <input class="settingsbuttons" id="submit-profilepic" type="submit">
             </div>
         </form>
         <div class="rightpane" id="profilerightpane1">
@@ -80,8 +72,8 @@
                     </div>
                 </form>
                 <form action="/users/settings/<%= findUser._id %>?_method=DELETE" method="POST">
-                    <div>
-                        <button class="settingsbutton" id="delete-user" type="submit">Delete User</button>
+                    <div id="delete-settings-button">
+                        <button class="settingsbuttons" id="sb5" type="submit">Delete User</button>
                     </div>
                 </form>    
             </table>
