@@ -76,7 +76,7 @@
                         <div class="comment-interactions">
                             <div class="comm-rate">
                                 <img id="like" src="/css/assets/like.png" onclick="react(this, 'comment-1')">
-                                <span id="like-num"> 1K </span>
+                                <span id="like-num"><%= comment.upvotes %></span>
                                 <img id="dislike" src="/css/assets/dislike.png" onclick="react(this, 'comment-1')">
                             </div>
                             <% if (comment.isEdited) { %>

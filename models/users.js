@@ -46,7 +46,15 @@ const userSchema = new mongoose.Schema({
     downvotedPosts: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Post'
-    }]
+    }],
+    upvotedComments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+    }],
+    downvotedComments: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Comment'
+    }],
 })
 
 userSchema.pre('save', async function (next) {

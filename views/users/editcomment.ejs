@@ -31,6 +31,11 @@
                 <textarea name="comment_body" type="text" id="title" class="title" maxlength="100"><%= comment.body %></textarea>
             </div>
 
+            <div>
+                <a href="/users/editcomment/upvote/<%= comment._id %>">Upvote</a>
+                <a href="/users/editcomment/downvote/<%= comment._id %>">Downvote</a>
+            </div>
+
             <input id="save" class="save-edit" type="submit" value="Save Edits"/>
         </form>
         <form action="/users/editcomment/<%= comment._id %>?_method=DELETE" method="POST">

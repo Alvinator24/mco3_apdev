@@ -501,6 +501,33 @@ router.get('/editpost/upvote/:id', async (req, res) => {
     }
 })
 
+// upvote a comment
+router.get('/editcomment/upvote/:id', async (req, res) => {
+    try {
+        const commentId = req.params.id
+        const username = req.session.username
+        const user = await User.findOne({ username })
+        if (!commentId) {
+            return res.status(404).send('Comment not found')
+        }
+        const commentIdObject = new mongoose.Types.ObjectId(commentId)
+        if (user.upvotedComments.includes(commentIdObject)) {
+            return res.status(400).send('You have already upvoted this comment!')
+        } else {
+            await Comment.findByIdAndUpdate(commentId, { $inc: { upvotes: 1 } }, { new: true })
+            await User.findOneAndUpdate(
+                { username },
+                { $push: { upvotedComments: commentIdObject } },
+                { new: true }
+            )
+        }
+        res.redirect('/users/homepage')
+    } catch (error) {
+        console.error('Error upvoting comment:', error)
+        res.status(500).json({ error: 'Internal Server Error' })
+    }
+})
+
 // downvote a post
 router.get('/editpost/downvote/:id', async (req, res) => {
     try {
@@ -524,6 +551,33 @@ router.get('/editpost/downvote/:id', async (req, res) => {
         res.redirect('/users/homepage')
     } catch (error) {
         console.error('Error downvoting post:', error)
+        res.status(500).json({ error: 'Internal Server Error' })
+    }
+})
+
+// downvote a comment
+router.get('/editcomment/downvote/:id', async (req, res) => {
+    try {
+        const commentId = req.params.id
+        const username = req.session.username
+        const user = await User.findOne({ username })
+        if (!commentId) {
+            return res.status(404).send('Comment not found')
+        }
+        const commentIdObject = new mongoose.Types.ObjectId(commentId)
+        if (user.downvotedComments.includes(commentIdObject)) {
+            return res.status(400).send('You have already downvoted this comment!')
+        } else {
+            await Comment.findByIdAndUpdate(commentId, { $inc: { upvotes: -1 } }, { new: true })
+            await User.findOneAndUpdate(
+                { username },
+                { $push: { downvotedComments: commentIdObject } },
+                { new: true }
+            )
+        }
+        res.redirect('/users/homepage')
+    } catch (error) {
+        console.error('Error downvoting comment:', error)
         res.status(500).json({ error: 'Internal Server Error' })
     }
 })
