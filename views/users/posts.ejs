@@ -32,7 +32,12 @@
 
         <div class="contents">
             <div class="user">
-                <img class="userpfp" src="<%= user.image %>"/>
+                <% const postAuthor = users.find(user => user.username === post.author) %>
+                <% if (postAuthor && postAuthor.image) { %>
+                    <img class="userpfp" src="<%= postAuthor.image %>"/>
+                <% } else { %>
+                    <img class="userpfp" src="https://i.pinimg.com/564x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg">
+                <% } %>
                 <div class="username"><%= post.author %></div>
             </div>
             <div class="post-content">
@@ -57,7 +62,12 @@
                     <% comments.forEach(comment => { %>
                     <li id="<%= comment._id %>">
                         <div class="comment-text">
-                            <img class="userpfp" src="<%= comment.image %>"/>
+                            <% const commentAuthor = users.find(user => user.username === comment.author) %>
+                            <% if (commentAuthor && commentAuthor.image) { %>
+                                <img class="userpfp" src="<%= commentAuthor.image %>"/>
+                            <% } else { %>
+                                <img class="userpfp" src="https://i.pinimg.com/564x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg">
+                            <% } %>
                             <div class="author">
                                 <p class="comment"><%= comment.author %></p>
                             </div>

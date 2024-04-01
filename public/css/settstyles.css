@@ -20,6 +20,17 @@ body{
     font-family: 'Comfortaa';
 }
 
+#about-packages {
+    margin-top: -55px;
+}
+
+#about-description {
+    width: 700px;
+    line-height: 40px;
+    margin-top: 50px;
+    margin-left: 200px;
+}
+
 #body{
     height: 100%;
     width: 90%;

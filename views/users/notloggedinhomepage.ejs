@@ -72,9 +72,17 @@
                     <% const filteredPosts = searchQuery ? posts.filter(post => post.title.toLowerCase().includes(String(searchQuery).toLowerCase())) : posts;%>
                     <% filteredPosts.forEach(post => {%>
                         <div id="<%= post._id %>" class="flexrow">
-                            <div class="user"><img src="<%= post.image %>"/></div>
+                            <% const postAuthor = users.find(user => user.username === post.author) %>
+                            <% if (postAuthor && postAuthor.image) { %>
+                                <div class="user"><img src="<%= postAuthor.image %>"/></div>
+                            <% } else { %>
+                                <div class="user">
+                                    <img src="https://i.pinimg.com/564x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg">
+                                </div>
+                            <% } %>
                             <div class="post-box shadow flexcolumn autocenter">
                                 <div class="post-content">
+                                    <h2><%= post.author %></h2>
                                     <h3 class="title"><%= post.title %></h3>
                                     <p class="post-text"><%= post.body %></p>
                                 </div>

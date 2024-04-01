@@ -71,14 +71,17 @@ router.post('/register', upload.single('image'), [
         .isLength({ max: 30 })
         .withMessage('Bio has a maximum of 30 characters')
 ], async (req, res) => {
+    const existingUser = await User.findOne({ username: req.body.username })
     try {
         const errors = validationResult(req)
-        // const result = await cloudinary.uploader.upload(req.file.path)
         if (!errors.isEmpty()) {
             return res.status(400).json({ errors: errors.array() })
         }
-        const existingUser = await User.findOne({ username: req.body.username })
-        const result = await cloudinary.uploader.upload(req.file.path)
+        let imageUrl = 'https://i.pinimg.com/564x/77/2a/a7/772aa709423494dba2e436c8df1fe643.jpg';
+        if (req.file) {
+            const result = await cloudinary.uploader.upload(req.file.path)
+            imageUrl = result.secure_url
+        }
         if (existingUser) {
             res.send('Username is already taken!')
         } else if (req.body.password != req.body.confirmpassword) {
@@ -93,11 +96,11 @@ router.post('/register', upload.single('image'), [
                 password: req.body.password,
                 confirmpassword: req.body.confirmpassword,
                 bio: req.body.bio,
-                image: result.secure_url
-            });
+                image: imageUrl
+            })
             await newUser.save()
         }
-        res.redirect('/');
+        res.redirect('/')
     } catch (error) {
         res.send('Error creating new user' + error)
     }
@@ -152,8 +155,8 @@ router.delete('/settings/:id', async (req, res) => {
     const findUser = await User.findOne({ username: req.session.username })
     try {
         await User.findOneAndDelete(findUser)
-        await Post.updateMany({ author: req.session.username }, { author: 'deleted_user' })
-        await Comment.updateMany({ author: req.session.username }, { author: 'deleted_user' })
+        await Post.updateMany({ author: req.session.username }, { author: 'deleted_user' }, { image: 'https://i.pinimg.com/564x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg' })
+        await Comment.updateMany({ author: req.session.username }, { author: 'deleted_user' }, { image: 'https://i.pinimg.com/564x/76/4d/59/764d59d32f61f0f91dec8c442ab052c5.jpg' })
         res.redirect('/')
     } catch (error) {
         console.error('Error fetching user settings:', error)
@@ -207,12 +210,15 @@ router.put('/settings/:id', upload.single('image'), async (req, res) => {
 // homepage not logged in
 router.get('/notloggedinhomepage', async (req, res) => {
     const searchQuery = req.query.search
+    const posts = await Post.find().sort({ createdAt: -1 })
+    const users = await User.find({ username: { $in: posts.map(post => post.author) } })
     try {
         const posts = await Post.find()
         res.render('users/notloggedinhomepage', {
             title: 'Home Page',
             posts,
-            searchQuery
+            searchQuery,
+            users
         })
     } catch (error) {
         console.error('Error fetching posts:', error)
@@ -281,6 +287,8 @@ router.get('/posts/:id', async (req, res) => {
     const postId = req.params.id;
     const post = await Post.findById(postId)
     const user = await User.findOne({ username: post.author })
+    const posts = await Post.find()
+    const users = await User.find({ username: { $in: posts.map(post => post.author) } })
     try {
         const post = await Post.findById(postId)
         if (!post) {
@@ -293,7 +301,8 @@ router.get('/posts/:id', async (req, res) => {
             post,
             comments: postComments,
             findUser,
-            user
+            user,
+            users
         })
     } catch (error) {
         console.error('Error fetching post:', error)
