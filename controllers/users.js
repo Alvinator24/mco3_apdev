@@ -99,7 +99,7 @@ router.post('/register', upload.single('image'), [
         }
         res.redirect('/')
     } catch (error) {
-        res.send('Error creating new user' + error)
+        res.send('Error creating new user', + error)
     }
 })
 
