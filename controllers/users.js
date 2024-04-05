@@ -69,6 +69,7 @@ router.post('/register', upload.single('image'), [
         .withMessage('Bio has a maximum of 30 characters')
 ], async (req, res) => {
     const existingUser = await User.findOne({ username: req.body.username })
+    const existingMobileNumber = await User.findOne({ mobilenumber: req.body.mobilenumber })
     try {
         const errors = validationResult(req)
         if (!errors.isEmpty()) {
@@ -80,9 +81,11 @@ router.post('/register', upload.single('image'), [
             imageUrl = result.secure_url
         }
         if (existingUser) {
-            res.send('Username is already taken!')
+            return res.send('Username is already taken!')
+        } else if (existingMobileNumber) {
+            return res.send('Mobile number is already taken!')
         } else if (req.body.password != req.body.confirmpassword) {
-            res.send('Reconfirm password!')
+            return res.send('Reconfirm password!')
         } else {
             const newUser = new User({
                 lastname: req.body.lastname,
@@ -91,7 +94,6 @@ router.post('/register', upload.single('image'), [
                 mobilenumber: req.body.mobilenumber,
                 username: req.body.username,
                 password: req.body.password,
-                confirmpassword: req.body.confirmpassword,
                 bio: req.body.bio,
                 image: imageUrl
             })
@@ -99,7 +101,8 @@ router.post('/register', upload.single('image'), [
         }
         res.redirect('/')
     } catch (error) {
-        res.send('Error creating new user', + error)
+        console.error(error)
+        res.status(500).json({ message: 'Internal server error' })
     }
 })
 

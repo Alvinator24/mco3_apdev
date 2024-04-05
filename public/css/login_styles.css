@@ -26,6 +26,10 @@ body {
     align-items: center;
 }
 
+#login {
+    margin-top: 80px;
+}
+
 .login {
     flex: 1;
     height: 80%; 
