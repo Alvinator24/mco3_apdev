@@ -336,7 +336,7 @@ h2{
 }
 
 .post-content{ /*modified height and width*/
-    height: 160px;
+    height: 230px;
     width: 85%;
     margin: 10px;
     border-radius: 25px;
@@ -346,6 +346,7 @@ h2{
 
 .post-text{
     font-size: 12px;
+    line-height: 20px;
 }
 
 .stories{

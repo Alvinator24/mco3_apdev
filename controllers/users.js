@@ -436,7 +436,7 @@ router.delete('/editcomment/:id', async (req, res) => {
 router.put('/editpost/:id', async (req, res) => {
     try {
         const postId = req.params.id
-        const post = await Comment.findById(postId)
+        const post = await Post.findById(postId)
         if (!post) {
             return res.status(404).send('Post not found')
         }
@@ -459,7 +459,7 @@ router.put('/editpost/:id', async (req, res) => {
 // delete a post
 router.delete('/editpost/:id', async (req, res) => {
     try {
-        const postId = req.params.id
+        const postId = req.params.id;
         const post = await Post.findById(postId)
         if (!post) {
             return res.status(404).send('Post not found')
@@ -467,12 +467,13 @@ router.delete('/editpost/:id', async (req, res) => {
         if (post.author !== req.session.username) {
             return res.status(403).send('You are not authorized to delete this post!')
         }
-        await Post.findByIdAndDelete({_id: postId})
-        res.redirect('../homepage')
+        await Post.findByIdAndDelete(postId)
+        res.redirect('../homepage');
     } catch (error) {
         res.status(500).send('Failed to delete post: ' + error.message)
     }
 })
+
 
 // upvote a post
 router.get('/editpost/upvote/:id', async (req, res) => {
