@@ -70,14 +70,15 @@
                             <% } %>
                             <div class="author">
                                 <p class="comment"><%= comment.author %></p>
+                                <p class="comment"><%= comment.body %></p>
                             </div>
-                            <p class="comment"><%= comment.body %></p>
+                            
                         </div>
                         <div class="comment-interactions">
                             <div class="comm-rate">
-                                <img id="like" src="/css/assets/like.png" onclick="react(this, 'comment-1')">
+                                <img id="like" src="/css/assets/like.png">
                                 <span id="like-num"><%= comment.upvotes %></span>
-                                <img id="dislike" src="/css/assets/dislike.png" onclick="react(this, 'comment-1')">
+                                <img id="dislike" src="/css/assets/dislike.png">
                             </div>
                             <% if (comment.isEdited) { %>
                                 <h2 id="is-edited">Edited</h2>

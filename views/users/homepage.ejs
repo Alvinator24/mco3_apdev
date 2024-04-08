@@ -82,7 +82,7 @@
                             </form>
                         </div>
                     </div>
-                    <% const filteredPosts = searchQuery ? posts.filter(post => post.title.toLowerCase().includes(String(searchQuery).toLowerCase())) : posts;%>
+                    <% const filteredPosts = searchQuery ? posts.filter(post => post.title.toLowerCase().includes(String(searchQuery).toLowerCase()) || post.body.toLowerCase().includes(String(searchQuery).toLowerCase())) : posts; %>
                     <% filteredPosts.forEach(post => {%>
                         <div id="<%= post._id %>" class="flexrow">
                             <% const postAuthor = users.find(user => user.username === post.author) %>
