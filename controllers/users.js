@@ -209,19 +209,19 @@ router.put('/settings/:id', upload.single('image'), async (req, res) => {
 
 // homepage not logged in
 router.get('/notloggedinhomepage', async (req, res) => {
-    const searchQuery = req.query.search
-    const posts = await Post.find().sort({ createdAt: -1 })
-    const users = await User.find({ username: { $in: posts.map(post => post.author) } })
     try {
-        const posts = await Post.find()
+        const searchQuery = req.query.search;
+        const posts = await Post.find().sort({ createdAt: -1 });
+        const users = await User.find({ username: { $in: posts.map(post => post.author) } })
+        
         res.render('users/notloggedinhomepage', {
             title: 'Home Page',
             posts,
             searchQuery,
             users
-        })
+        });
     } catch (error) {
-        console.error('Error fetching posts:', error)
+        console.error('Error fetching posts:', error);
         res.status(500).json({ error: 'Internal Server Error' })
     }
 })
