@@ -474,7 +474,6 @@ router.delete('/editpost/:id', async (req, res) => {
     }
 })
 
-
 // upvote a post
 router.get('/editpost/upvote/:id', async (req, res) => {
     try {

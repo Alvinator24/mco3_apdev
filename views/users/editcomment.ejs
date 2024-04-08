@@ -26,11 +26,11 @@
                 <img class="userpfp" src="<%= user.image %>"/>
                 <div class="username"><%= comment.author %></div>
             </div>
-
+    
             <div class="post-content">
-                <textarea name="comment_body" type="text" id="title" class="title" maxlength="100"><%= comment.body %></textarea>
+                <textarea name="comment_body" type="text" id="title" class="title"><%= comment.body %></textarea>
             </div>
-
+    
             <div>
                 <a href="/users/editcomment/upvote/<%= comment._id %>">Upvote</a>
                 <a href="/users/editcomment/downvote/<%= comment._id %>">Downvote</a>
